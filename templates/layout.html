@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        {% if title %}
+            <title>{{ title }}</title>
+        {% else %}
+            <title>ISD 508 Visitors</title>
+        {% endif %}
+        <!-- Foundation CSS -->
+        <link rel="stylesheet" href="static/foundation.css">
+        <link rel="stylesheet" href="static/app.css">
+        <link rel="stylesheet" type="text/css" href="static/main.css">
+    </head>
+    <body>
+        <header>
+            <div class="top-bar">
+              <div class="top-bar-left">
+                <ul class="dropdown menu" data-dropdown-menu>
+                  <li class="menu-text">ISD 508 Visitors</li>
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li>
+                    <a href="#">Reports</a>
+                    <ul class="menu vertical">
+                      <li><a href="#">Daily</a></li>
+                      <li><a href="#">Custom</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="top-bar-right">
+                <ul class="menu">
+                  <li><a href="#">Account</a></li>
+                  <li><a href="#">Login</a> </li>
+                </ul>
+              </div>
+            </div>
+        </header>
+        <div class="grid-container fluid">
+            {% block content %}{% endblock %}
+        </div>
+
+    </body>
+    <script src="static/js/vendor/jquery.js"></script>
+    <script src="static/js/vendor/what-input.js"></script>
+    <script src="static/js/vendor/foundation.js"></script>
+    <script src="static/js/app.js"></script>
+</html>

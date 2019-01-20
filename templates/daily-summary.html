@@ -1,0 +1,118 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="grid-x grid-margin-x align-center">
+        <!-- Student Sign-in Report -->
+        <div class="cell large-12 callout">
+            <h3 class="table-label text-center">Student Sign-in Log</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Grade</th>
+                  <th>Parent</th>
+                  <th>Reason</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in student_log %}
+                    {% if post.direction == "In" %}
+                        <tr>
+                            <td>{{ post.student_name }}</td>
+                            <td>{{ post.grade }}</td>
+                            <td>{{ post.parent }}</td>
+                            <td>{{ post.reason }}</td>
+                            <td>{{ post.timestamp }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <!-- Student Sign-out Report -->
+        <div class="cell large-12 callout">
+            <h3 class="table-label text-center">Student Sign-out Log</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Student</th>
+                  <th>Grade</th>
+                  <th>Parent</th>
+                  <th>Reason</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in student_log %}
+                    {% if post.direction == "Out" %}
+                        <tr>
+                            <td>{{ post.student_name }}</td>
+                            <td>{{ post.grade }}</td>
+                            <td>{{ post.parent }}</td>
+                            <td>{{ post.reason }}</td>
+                            <td>{{ post.timestamp }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <!-- Visitor Sign-in report -->
+        <div class="cell large-12 callout">
+            <h3 class="table-label text-center">Visitor Sign-in Log</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Visitor</th>
+                  <th>Student</th>
+                  <th>Grade</th>
+                  <th>Reason</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in visitor_log %}
+                    {% if post.direction == "In" %}
+                        <tr>
+                            <td>{{ post.visitor }}</td>
+                            <td>{{ post.student_name }}</td>
+                            <td>{{ post.grade }}</td>
+                            <td>{{ post.reason }}</td>
+                            <td>{{ post.timestamp }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+        <!-- Visitor Sign-out Report -->
+        <div class="cell large-12 callout">
+            <h3 class="table-label text-center">Visitor Sign-out Log</h3>
+            <table>
+              <thead>
+                <tr>
+                  <th>Visitor</th>
+                  <th>Student</th>
+                  <th>Grade</th>
+                  <th>Reason</th>
+                  <th>Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for post in visitor_log %}
+                    {% if post.direction == "Out" %}
+                        <tr>
+                            <td>{{ post.visitor }}</td>
+                            <td>{{ post.student_name }}</td>
+                            <td>{{ post.grade }}</td>
+                            <td>{{ post.reason }}</td>
+                            <td>{{ post.timestamp }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock content %}s
