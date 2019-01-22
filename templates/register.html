@@ -5,35 +5,35 @@
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
                 <fieldset>
-                    <h2 class="text-center">Student Sign-in</h2>
+                    <h2 class="text-center">Register Today</h2>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.student_name.label(class="") }}
-                            {{ form.student_name(class="", placeholder="Student name") }}
+                            {{ form.username.label(class="") }}
+                            {{ form.username(class="", placeholder="Must be between 2-20 characters") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.grade.label(class="") }}
-                            {{ form.grade(class="") }}
+                            {{ form.email.label(class="") }}
+                            {{ form.email(class="", placeholder="Enter your email address to be used for logging in.") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.parent.label(class="") }}
-                            {{ form.parent(class="", placeholder='Type "None" if parent/guardian is not present') }}
+                            {{ form.role.label(class="") }}
+                            {{ form.role(class="") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.reason.label(class="") }}
-                            {{ form.reason(class="") }}
+                            {{ form.password.label(class="") }}
+                            {{ form.password(class="") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.reason_other.label(class="") }}
-                            {{ form.reason_other(class="") }}
+                            {{ form.password_confirmation.label(class="") }}
+                            {{ form.password_confirmation(class="") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
@@ -44,4 +44,10 @@
                 </fieldset>
             </form>
         </div>
+        <div class="grid-x grid-margin-x align-center mt-5">
+            <small class="small cell large-8 text-center">
+                <span class="muted">Already have an account? </span><a href="{{ url_for('login') }}">Login</a>
+            </small>
+        </div>
+    </div>
 {% endblock content %}

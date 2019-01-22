@@ -10,22 +10,24 @@
             <title>ISD 508 Visitors</title>
         {% endif %}
         <!-- Foundation CSS -->
-        <link rel="stylesheet" href="static/foundation.css">
-        <link rel="stylesheet" href="static/app.css">
-        <link rel="stylesheet" type="text/css" href="static/main.css">
+        <link rel="stylesheet" href="{{ url_for('static', filename='foundation.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
     </head>
+
     <body>
+      <div class="grid-container fluid">
         <header>
             <div class="top-bar">
               <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
                   <li class="menu-text">ISD 508 Visitors</li>
-                  <li><a href="#">Home</a></li>
+                  <li><a href="{{ url_for('home') }}">Home</a></li>
                   <li><a href="#">About</a></li>
                   <li>
                     <a href="#">Reports</a>
                     <ul class="menu vertical">
-                      <li><a href="#">Daily</a></li>
+                      <li><a href="{{ url_for('daily_summary') }}">Daily</a></li>
                       <li><a href="#">Custom</a></li>
                     </ul>
                   </li>
@@ -33,16 +35,56 @@
               </div>
               <div class="top-bar-right">
                 <ul class="menu">
-                  <li><a href="#">Account</a></li>
-                  <li><a href="#">Login</a> </li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="{{ url_for('register') }}">Register</a></li>
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a class="button" href="{{ url_for('site_selection') }}">Change Site</a></li>
                 </ul>
               </div>
             </div>
         </header>
-        <div class="grid-container fluid">
+        <div class="grid-container fluid block-content">
+            <!-- This displays Flask flash messages at the top of the page -->
+            <div class="grid-x grid-margin-x align-center">
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            <div class="cell large-8 text-center alert alert-{{ category }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="grid-x grid-margin-x align-center">
+                {% if session['site'] %}
+                    <div class="cell large-8 text-center">
+                        <h2>{{ session['site'] }} Sign-in/Sign-out</h2>
+                    </div>
+                {% else %}
+                    <h2>ISD 508 Visitor Sign In</h2>
+                    <a class="button small" href="{{ url_for('site_selection') }}">Choose Site</a>
+                {% endif %}
+            </div>
             {% block content %}{% endblock %}
         </div>
-
+        <footer class="footer">
+            <div class="top-bar">
+              <div class="top-bar-left">
+                  <a href="#">&copy; 2019 MNDEV.TECH</a>
+              </div>
+              <div class="top-bar-right">
+                <ul class="menu">
+                  <li><a href="#">Home</a></li>
+                  <li><a href="#">About</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                  <li><a href="#">EULA</a></li>
+                  <li><a href="#">Contact</a></li>
+                </ul>
+              </div>
+            </div>
+        </footer>
+      </div>
     </body>
     <script src="static/js/vendor/jquery.js"></script>
     <script src="static/js/vendor/what-input.js"></script>

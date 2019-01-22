@@ -1,6 +1,52 @@
+.block-content {
+    padding: 1rem 0;
+}
+
+.home-header {
+    background-color: #1673b1;
+    color: #ffffff;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.home-border {
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
 .table-label {
     background-color: #1673b1;
     color: #d3d3d3;
     margin-top: 5px;
     padding: 5px;
+}
+
+.footer {
+    padding: 1rem 0;
+}
+
+.log-in-form {
+  border: 1px solid #cacaca;
+  padding: 1rem;
+  border-radius: 0;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.muted {
+    color: #8a8a8a;
+}
+
+.alert-success{
+    background-color: #3adb76;
+    padding: 0.5em;
+    border-radius: 3px;
 }

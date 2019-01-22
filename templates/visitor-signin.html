@@ -5,7 +5,13 @@
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
                 <fieldset>
-                    <h2 class="text-center">Student Sign-in</h2>
+                    <h2 class="text-center">Visitor Sign-in</h2>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.visitor_name.label(class="") }}
+                            {{ form.visitor_name(class="", placeholder="Visitor name") }}
+                        </div>
+                    </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.student_name.label(class="") }}
@@ -20,12 +26,6 @@
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.parent.label(class="") }}
-                            {{ form.parent(class="", placeholder='Type "None" if parent/guardian is not present') }}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
                             {{ form.reason.label(class="") }}
                             {{ form.reason(class="") }}
                         </div>
@@ -33,7 +33,7 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.reason_other.label(class="") }}
-                            {{ form.reason_other(class="") }}
+                            {{ form.reason_other(class="", placeholder="If meeting with a teacher, specify the teacher here") }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">

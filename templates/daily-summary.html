@@ -92,9 +92,6 @@
               <thead>
                 <tr>
                   <th>Visitor</th>
-                  <th>Student</th>
-                  <th>Grade</th>
-                  <th>Reason</th>
                   <th>Time</th>
                 </tr>
               </thead>
@@ -103,9 +100,6 @@
                     {% if post.direction == "Out" %}
                         <tr>
                             <td>{{ post.visitor }}</td>
-                            <td>{{ post.student_name }}</td>
-                            <td>{{ post.grade }}</td>
-                            <td>{{ post.reason }}</td>
                             <td>{{ post.timestamp }}</td>
                         </tr>
                     {% endif %}

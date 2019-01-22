@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="grid-container log-in-form">
+        <div>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <h2 class="text-center">Login</h2>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.email.label(class="") }}
+                            {{ form.email(class="", placeholder="Login with your email") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.password.label(class="") }}
+                            {{ form.password(class="") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-4">
+                            {{ form.submit(class="button expanded") }}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <div class="grid-x grid-margin-x align-center mt-5">
+            <small class="small cell large-8 text-center">
+                <span class="muted">Forget your password? </span><a href="#">Reset</a>
+            </small>
+        </div>
+    </div>
+{% endblock content %}

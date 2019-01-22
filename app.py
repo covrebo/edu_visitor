@@ -1,6 +1,8 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, url_for, session, flash, redirect
+from forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = '142972b1bb8f93156d1ce84ae83a9e9f'
 
 # Example data from sign-in or sign-out forms
 student_log = [
@@ -86,6 +88,9 @@ visitor_log = [
 def home():
     # TODO: Create a quick welcome page that has four buttons: Student Sign-In, Student Sign-Out, Visitor Sign-In, and Visitor Sign-Out
     # TODO: Flash a message that the user has successfully signed in or out
+    # TODO: Finish the links and pages for the footer
+    # TODO: Fix the "URL_FOR" links for the JS on the bottom of layouts.html
+    # TODO: Fix the frame in the home page to act correctly when the window is sized down
     return render_template('home.html')
 
 # Route to a page that tells about the creation of the system
@@ -93,14 +98,57 @@ def home():
 def about():
     return render_template('about.html', title='About')
 
-# Route to the signin page for students
-@app.route('/signin-student.html')
-def student_signin():
-    return render_template('student-signin.html', title='Student Sign-in')
+# Route to a registration page
+@app.route('/register')
+def register():
+    # TODO make registration link in navigation bar only visible to admins and page only accessible to admins
+    # Create the registration form to pass to the registration page
+    form = RegistrationForm()
+    return render_template('register.html', title='Register', form=form)
 
-# TODO: Create route for student signouts
-# TODO: Create route for visitor signins
-# TODO: Create route for visitor signouts
+# Route to a login page
+@app.route('/login')
+def login():
+    # Create the registration form to pass to the registration page
+    # TODO: Create the url_for the password reset link
+    form = LoginForm()
+    return render_template('login.html', title='Login', form=form)
+
+# Route to a set the entrance
+@app.route('/site-selection', methods=['GET', 'POST'])
+def site_selection():
+    # Create a form to set the site value for the session
+    form = SiteSelectionForm()
+    if form.validate_on_submit():
+        # Update site value in session cookie
+        session['site'] = form.site.data
+        flash('Your location has been updated!', 'success')
+        return redirect(url_for('daily_summary'))
+    return render_template('site-selection.html', title='Site Selection', form=form)
+
+# Route to the sign-in page for students
+@app.route('/student-signin')
+def student_signin():
+    form = StudentSignInForm()
+    return render_template('student-signin.html', title='Student Sign-in', form=form)
+
+# Route to the sign-out page for students
+@app.route('/student-signout')
+def student_signout():
+    form = StudentSignOutForm()
+    return render_template('student-signout.html', title='Student Sign-out', form=form)
+
+# Route to the sign-in page for visitors
+@app.route('/visitor-signin')
+def visitor_signin():
+    form = VisitorSignInForm()
+    return render_template('visitor-signin.html', title='Visitor Sign-in', form=form)
+
+# Route to the sign-out page for visitors
+@app.route('/visitor-signout')
+def visitor_signout():
+    form = VisitorSignOutForm()
+    return render_template('visitor-signout.html', title='Visitor Sign-out', form=form)
 
 # Route with information about how to use the application
 @app.route('/help')
@@ -121,8 +169,7 @@ def daily_summary():
 if __name__ == '__main__':
     app.run()
 
-# TODO: Add visitor sign-ins/sign-outs in addition to the students
 # TODO: Add the capability to search for a day's summary
-# TODO: Add the ability to search for an individual's acitivity
-# TODO: Add multiple buildings to the site and track which building view is active
+# TODO: Add the ability to search for an individual's activity
+# TODO: Add admin panel to manage users and sites
 # TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out

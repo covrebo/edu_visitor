@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="grid-container log-in-form">
+        <div>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <h2 class="text-center">Visitor Sign-out</h2>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.visitor_name.label(class="") }}
+                            {{ form.visitor_name(class="", placeholder="Visitor name") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-4">
+                            {{ form.submit(class="button large expanded") }}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+{% endblock content %}
