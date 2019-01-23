@@ -45,8 +45,7 @@
     color: #8a8a8a;
 }
 
-.alert-success{
-    background-color: #3adb76;
-    padding: 0.5em;
-    border-radius: 3px;
+.form-input-alert {
+    border-color: lightcoral !important;
+    color: #0a0a0a;
 }

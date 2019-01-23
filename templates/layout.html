@@ -23,7 +23,7 @@
                 <ul class="dropdown menu" data-dropdown-menu>
                   <li class="menu-text">ISD 508 Visitors</li>
                   <li><a href="{{ url_for('home') }}">Home</a></li>
-                  <li><a href="#">About</a></li>
+                  <li><a href="{{ url_for('about') }}">About</a></li>
                   <li>
                     <a href="#">Reports</a>
                     <ul class="menu vertical">
@@ -49,7 +49,7 @@
                 {% with messages = get_flashed_messages(with_categories=true) %}
                     {% if messages %}
                         {% for category, message in messages %}
-                            <div class="cell large-8 text-center alert alert-{{ category }}">
+                            <div class="cell large-10 text-center callout {{ category }}">
                                 {{ message }}
                             </div>
                         {% endfor %}
@@ -70,18 +70,18 @@
         </div>
         <footer class="footer">
             <div class="top-bar">
-              <div class="top-bar-left">
-                  <a href="#">&copy; 2019 MNDEV.TECH</a>
-              </div>
-              <div class="top-bar-right">
-                <ul class="menu">
-                  <li><a href="#">Home</a></li>
-                  <li><a href="#">About</a></li>
-                  <li><a href="#">Privacy Policy</a></li>
-                  <li><a href="#">EULA</a></li>
-                  <li><a href="#">Contact</a></li>
-                </ul>
-              </div>
+                <div class="top-bar-left">
+                    <a href="#">&copy; 2019 MNDEV.TECH</a> ver. 0.1
+                </div>
+                <div class="top-bar-right">
+                    <ul class="menu">
+                        <li><a href="{{ url_for('home') }}">Home</a></li>
+                        <li><a href="{{ url_for('about') }}">About</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">EULA</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
             </div>
         </footer>
       </div>

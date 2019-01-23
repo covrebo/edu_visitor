@@ -6,6 +6,14 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 # Create a registration form class
 class RegistrationForm(FlaskForm):
     # Form fields with validators
+    user_first_name = StringField('First Name', validators=[
+        DataRequired(),
+        Length(min=2, max=30)
+    ])
+    user_last_name = StringField('Last Name', validators=[
+        DataRequired(),
+        Length(min=2, max=30)
+    ])
     username = StringField('Username', validators=[
         DataRequired(),
         Length(min=2, max=20)
@@ -15,8 +23,8 @@ class RegistrationForm(FlaskForm):
         Email()
         ])
     role = SelectField('Role', choices=[
-        ('admin', 'Administrator'),
-        ('staff', 'Staff')
+        ('staff', 'Staff'),
+        ('admin', 'Administrator')
         ], validators=[
         DataRequired()
         ])
@@ -89,9 +97,7 @@ class StudentSignInForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason', validators=[
-        DataRequired()
-        ])
+    reason_other = StringField('If other, please explain the reason')
     submit = SubmitField('Sign-in')
 
 # Create a student sign-in form class
@@ -129,9 +135,7 @@ class StudentSignOutForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason', validators=[
-        DataRequired()
-        ])
+    reason_other = StringField('If other, please explain the reason')
     submit = SubmitField('Sign-out')
 
 # Create a visitor sign-in form class
@@ -168,9 +172,7 @@ class VisitorSignInForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason', validators=[
-        DataRequired()
-        ])
+    reason_other = StringField('If other, please explain the reason')
     submit = SubmitField('Sign-in')
 
 # Create a visitor sign-out form class

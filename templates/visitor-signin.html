@@ -9,13 +9,31 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.visitor_name.label(class="") }}
-                            {{ form.visitor_name(class="", placeholder="Visitor name") }}
+                            {% if form.vistor_name.errors %}
+                                {{ form.vistor_name(class='form-input-alert', placeholder='Visitor name') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.vistor_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.visitor_name(class="", placeholder="Visitor name") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.student_name.label(class="") }}
-                            {{ form.student_name(class="", placeholder="Student name") }}
+                            {% if form.student_name.errors %}
+                                {{ form.student_name(class='form-input-alert', placeholder="Student name") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.student_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.student_name(class="", placeholder="Student name") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">

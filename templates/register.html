@@ -8,32 +8,107 @@
                     <h2 class="text-center">Register Today</h2>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.username.label(class="") }}
-                            {{ form.username(class="", placeholder="Must be between 2-20 characters") }}
+                            {{ form.user_first_name.label(class="") }}
+                            {% if form.user_first_name.errors %}
+                                {{ form.user_first_name(class='form-input-alert', placeholder='Must be between 2-30 characters') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.user_first_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.user_first_name(class="", placeholder="Must be between 2-30 characters") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.email.label(class="") }}
-                            {{ form.email(class="", placeholder="Enter your email address to be used for logging in.") }}
+                            {{ form.user_last_name.label(class="") }}
+                            {% if form.user_last_name.errors %}
+                                {{ form.user_last_name(class='form-input-alert', placeholder='Must be between 2-20 characters') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.user_last_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.user_last_name(class="", placeholder="Must be between 2-20 characters") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.username.label(class="") }}
+                            {% if form.username.errors %}
+                                {{ form.username(class='form-input-alert', placeholder='Must be between 2-20 characters') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.username.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.username(class="", placeholder="Must be between 2-20 characters") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.email.label() }}
+                            {% if form.username.errors %}
+                                {{ form.email(class="form-input-alert", placeholder="Enter your email address to be used for logging in.") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.email.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.email(class="", placeholder="Enter your email address to be used for logging in.") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.role.label(class="") }}
-                            {{ form.role(class="") }}
+                            {% if form.role.errors %}
+                                {{ form.role(class="form-input-alert") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.role.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.role(class="", placeholder="Must be between 2-20 characters") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.password.label(class="") }}
-                            {{ form.password(class="") }}
+                            {{ form.password.label() }}
+                            {% if form.password.errors %}
+                                {{ form.password(class="form-input-alert") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.password.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.password() }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.password_confirmation.label(class="") }}
-                            {{ form.password_confirmation(class="") }}
+                            {{ form.password_confirmation.label() }}
+                            {% if form.password_confirmation.errors %}
+                                {{ form.password_confirmation(class="form-input-alert") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.password_confirmation.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.password_confirmation() }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">

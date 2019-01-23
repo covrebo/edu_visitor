@@ -99,19 +99,28 @@ def about():
     return render_template('about.html', title='About')
 
 # Route to a registration page
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     # TODO make registration link in navigation bar only visible to admins and page only accessible to admins
     # Create the registration form to pass to the registration page
     form = RegistrationForm()
+    if form.validate_on_submit():
+        flash(f'You have successfully created an account for {form.username.data}!', category='success')
+        return redirect(url_for('home'))
     return render_template('register.html', title='Register', form=form)
 
 # Route to a login page
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     # Create the registration form to pass to the registration page
     # TODO: Create the url_for the password reset link
     form = LoginForm()
+    if form.validate_on_submit():
+        if form.email.data == 'co@co.com' and form.password.data == 'Pass':
+            flash('Login successful!', category='success')
+            return redirect(url_for('home'))
+        else:
+            flash(f'Login unsuccessful, please check your credentials', category='alert')
     return render_template('login.html', title='Login', form=form)
 
 # Route to a set the entrance
@@ -127,25 +136,25 @@ def site_selection():
     return render_template('site-selection.html', title='Site Selection', form=form)
 
 # Route to the sign-in page for students
-@app.route('/student-signin')
+@app.route('/student-signin', methods=['GET', 'POST'])
 def student_signin():
     form = StudentSignInForm()
     return render_template('student-signin.html', title='Student Sign-in', form=form)
 
 # Route to the sign-out page for students
-@app.route('/student-signout')
+@app.route('/student-signout', methods=['GET', 'POST'])
 def student_signout():
     form = StudentSignOutForm()
     return render_template('student-signout.html', title='Student Sign-out', form=form)
 
 # Route to the sign-in page for visitors
-@app.route('/visitor-signin')
+@app.route('/visitor-signin', methods=['GET', 'POST'])
 def visitor_signin():
     form = VisitorSignInForm()
     return render_template('visitor-signin.html', title='Visitor Sign-in', form=form)
 
 # Route to the sign-out page for visitors
-@app.route('/visitor-signout')
+@app.route('/visitor-signout', methods=['GET', 'POST'])
 def visitor_signout():
     form = VisitorSignOutForm()
     return render_template('visitor-signout.html', title='Visitor Sign-out', form=form)
@@ -164,12 +173,15 @@ def daily_summary():
     # TODO: Make this visible only when you are logged in
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
+    # TODO: Only display records for the selected site
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
 if __name__ == '__main__':
     app.run()
 
+# Enhancements
 # TODO: Add the capability to search for a day's summary
 # TODO: Add the ability to search for an individual's activity
 # TODO: Add admin panel to manage users and sites
 # TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out
+# TODO: Throw an error on the sign in page if the reason = "Other" but there isn't any text in the other fields

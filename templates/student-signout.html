@@ -9,7 +9,16 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.student_name.label(class="") }}
-                            {{ form.student_name(class="", placeholder="Student name") }}
+                            {% if form.student_name.errors %}
+                                {{ form.student_name(class='form-input-alert', placeholder='Student name') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.student_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.student_name(class="", placeholder="Student name") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
@@ -21,7 +30,16 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.parent.label(class="") }}
-                            {{ form.parent(class="", placeholder='Type "None" if parent/guardian is not present') }}
+                            {% if form.parent.errors %}
+                                {{ form.parent(class='form-input-alert', placeholder='Type "None" if parent/guardian is not present') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.parent.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.parent(class="", placeholder='Type "None" if parent/guardian is not present') }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">

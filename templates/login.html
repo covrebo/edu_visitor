@@ -9,13 +9,37 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.email.label(class="") }}
-                            {{ form.email(class="", placeholder="Login with your email") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class='form-input-alert', placeholder="Login with your email") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.email.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.email(class="", placeholder="Login with your email") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.password.label(class="") }}
-                            {{ form.password(class="") }}
+                            {% if form.password.errors %}
+                                {{ form.password(class='form-input-alert') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.password.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.password(class="") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.remember() }}
+                            {{ form.remember.label() }}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
