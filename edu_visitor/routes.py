@@ -1,78 +1,7 @@
-from datetime import datetime
-from flask import Flask, render_template, url_for, session, flash, redirect
-from flask_sqlalchemy import SQLAlchemy
-from forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
-import os
-
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('SQLALCHEMY_DATABASE_URI')
-
-# Create the database instance
-db = SQLAlchemy(app)
-
-# Create database models/classes
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    user_first_name = db.Column(db.String(30), nullable=False)
-    user_last_name = db.Column(db.String(30), nullable=False)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    role = db.Column(db.String(20), nullable=False)
-    building = db.Column(db.String(20), nullable=False)
-    profile_image = db.Column(db.String(20), default='default.jpg')
-    password = db.Column(db.String(60), nullable=False)
-
-    def __repr__(self):
-        return f"User('{self.username}', '{self.user_first_name}', '{self.user_last_name}', " \
-            f"'{self.email}', '{self.role}', '{self.building}')"
-
-class StudentLog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    student_name = db.Column(db.String(50), nullable=False)
-    grade = db.Column(db.String(2), nullable=False)
-    parent_name = db.Column(db.String(50), nullable=False)
-    reason = db.Column(db.String(20), nullable=False)
-    reason_other = db.Column(db.String(120), nullable=False)
-    building = db.Column(db.String(20), nullable=False)
-    direction = db.Column(db.String(3), nullable=False)
-    date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-
-    def __repr__(self):
-        return f"StudentLog('{self.student_name}', '{self.grade}', '{self.parent_name}', " \
-            f"'{self.reason}', '{self.reason_other}', '{self.building}, '{self.direction}', " \
-            f"'{self.date_time}')"
-
-class VisitorLog(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    visitor_name = db.Column(db.String(50), nullable=False)
-    student_name = db.Column(db.String(50), nullable=False)
-    grade = db.Column(db.String(2), nullable=False)
-    reason = db.Column(db.String(20), nullable=False)
-    reason_other = db.Column(db.String(120), nullable=False)
-    building = db.Column(db.String(20), nullable=False)
-    direction = db.Column(db.String(3), nullable=False)
-    date_time = db.Column(db.DateTime, nullable=False)
-
-    def __repr__(self):
-        return f"VisitorLog('{self.visitor_name}', '{self.student_name}', '{self.grade}', " \
-            f"'{self.reason}', '{self.reason_other}', '{self.building}, '{self.direction}', " \
-            f"'{self.date_time}')"
-
-class Sites(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    site_name = db.Column(db.String(50), unique=True, nullable=False)
-
-    def __repr__(self):
-        return f"Site('{self.site_name}')"
-
-class Roles(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    role = db.Column(db.String(50), unique=True, nullable=False)
-
-    def __repr__(self):
-        return f"Role('{self.role}')"
+from flask import render_template, url_for, session, flash, redirect
+from edu_visitor import app
+from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
+from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 
 # Example data from sign-in or sign-out forms
 student_log = [
@@ -246,8 +175,6 @@ def daily_summary():
     # TODO: Only display records for the selected site
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
-if __name__ == '__main__':
-    app.run()
 
 # Enhancements
 # TODO: Add the capability to search for a day's summary
