@@ -83,6 +83,21 @@
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
+                            {{ form.building.label(class="") }}
+                            {% if form.building.errors %}
+                                {{ form.building(class="form-input-alert") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.building.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.building(class="") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
                             {{ form.password.label() }}
                             {% if form.password.errors %}
                                 {{ form.password(class="form-input-alert") }}

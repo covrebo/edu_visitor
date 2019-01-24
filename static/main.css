@@ -41,6 +41,10 @@
     margin-bottom: 5px;
 }
 
+.ml-5 {
+    margin-left: 5px;
+}
+
 .muted {
     color: #8a8a8a;
 }

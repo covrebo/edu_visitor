@@ -28,6 +28,15 @@ class RegistrationForm(FlaskForm):
         ], validators=[
         DataRequired()
         ])
+    building = SelectField('Building', choices=[
+        ('High School', 'High School'),
+        ('Middle School', 'Middle School'),
+        ('North Elementary', 'North Elementary'),
+        ('South Elementary', 'South Elemtary'),
+        ('Early Childhood', 'Early Childhood')
+        ], validators=[
+        DataRequired()
+    ])
     password = PasswordField('Password', validators=[
         DataRequired()
         ])
@@ -67,8 +76,10 @@ class StudentSignInForm(FlaskForm):
     # Form fields with validators
     student_name = StringField('Student Name', validators=[
         DataRequired(),
+        Length(min=2, max=50)
         ])
     grade = SelectField('Grade', choices=[
+        ('EC', 'Early Chilhood'),
         ('KG', 'Kindergarten'),
         ('01', 'First Grade'),
         ('02', 'Second Grade'),
@@ -86,7 +97,8 @@ class StudentSignInForm(FlaskForm):
         DataRequired()
         ])
     parent = StringField('Parent/Guardian', validators=[
-        DataRequired()
+        DataRequired(),
+        Length(min=2, max=50)
         ])
     reason = SelectField('Reason', choices=[
         ('Appointment', 'Appointment'),
@@ -97,7 +109,9 @@ class StudentSignInForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason')
+    reason_other = StringField('If other, please explain the reason', validators=[
+        Length(max=120)
+        ])
     submit = SubmitField('Sign-in')
 
 # Create a student sign-in form class
@@ -105,8 +119,10 @@ class StudentSignOutForm(FlaskForm):
     # Form fields with validators
     student_name = StringField('Student Name', validators=[
         DataRequired(),
+        Length(min=2, max=50)
         ])
     grade = SelectField('Grade', choices=[
+        ('EC', 'Early Chilhood'),
         ('KG', 'Kindergarten'),
         ('01', 'First Grade'),
         ('02', 'Second Grade'),
@@ -124,7 +140,8 @@ class StudentSignOutForm(FlaskForm):
         DataRequired()
         ])
     parent = StringField('Parent/Guardian', validators=[
-        DataRequired()
+        DataRequired(),
+        Length(min=2, max=50)
         ])
     reason = SelectField('Reason', choices=[
         ('Appointment', 'Appointment'),
@@ -135,7 +152,9 @@ class StudentSignOutForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason')
+    reason_other = StringField('If other, please explain the reason', validators=[
+        Length(max=120)
+        ])
     submit = SubmitField('Sign-out')
 
 # Create a visitor sign-in form class
@@ -143,11 +162,13 @@ class VisitorSignInForm(FlaskForm):
     # Form fields with validators
     visitor_name = StringField('Visitor Name', validators=[
         DataRequired(),
+        Length(min=2, max=50)
         ])
     student_name = StringField('Student Name', validators=[
-        DataRequired(),
+        DataRequired()
     ])
     grade = SelectField('Grade', choices=[
+        ('EC', 'Early Chilhood'),
         ('KG', 'Kindergarten'),
         ('01', 'First Grade'),
         ('02', 'Second Grade'),
@@ -172,7 +193,9 @@ class VisitorSignInForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    reason_other = StringField('If other, please explain the reason')
+    reason_other = StringField('If other, please explain the reason', validators=[
+        Length(max=120)
+        ])
     submit = SubmitField('Sign-in')
 
 # Create a visitor sign-out form class

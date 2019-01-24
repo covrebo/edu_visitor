@@ -56,14 +56,13 @@
                     {% endif %}
                 {% endwith %}
             </div>
-            <div class="grid-x grid-margin-x align-center">
+            <div class="grid-x grid-margin-x align-center align-middle">
                 {% if session['site'] %}
                     <div class="cell large-8 text-center">
                         <h2>{{ session['site'] }} Sign-in/Sign-out</h2>
                     </div>
                 {% else %}
-                    <h2>ISD 508 Visitor Sign In</h2>
-                    <a class="button small" href="{{ url_for('site_selection') }}">Choose Site</a>
+                    <span class="ml-5"><a class="button large" href="{{ url_for('site_selection') }}">Click Here To Select A Site</a></span>
                 {% endif %}
             </div>
             {% block content %}{% endblock %}
