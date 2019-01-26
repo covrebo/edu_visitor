@@ -54,7 +54,7 @@
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.email.label() }}
-                            {% if form.username.errors %}
+                            {% if form.email.errors %}
                                 {{ form.email(class="form-input-alert", placeholder="Enter your email address to be used for logging in.") }}
                                     <div class="callout small alert">
                                         {% for error in form.email.errors %}

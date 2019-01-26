@@ -1,5 +1,5 @@
 from flask import render_template, url_for, session, flash, redirect
-from edu_visitor import app
+from edu_visitor import app, db, bcrypt
 from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 
@@ -104,8 +104,13 @@ def register():
     # Create the registration form to pass to the registration page
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'You have successfully created an account for {form.username.data}!', category='success')
-        return redirect(url_for('home'))
+        # Hash the password from the registration form
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = Users(username=form.username.data, user_first_name=form.user_first_name.data, user_last_name=form.user_last_name.data, email=form.email.data, role=form.role.data, building=form.building.data, password=hashed_pw)
+        db.session.add(user)
+        db.session.commit()
+        flash(f'You have successfully created an account for {form.user_first_name.data} {form.user_last_name.data}!', category='success')
+        return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
 
 # Route to a login page
@@ -138,24 +143,56 @@ def site_selection():
 @app.route('/student-signin', methods=['GET', 'POST'])
 def student_signin():
     form = StudentSignInForm()
+    if form.validate_on_submit():
+        # Create an entry to add to the database
+        post = StudentLog(student_name=form.student_name.data, grade=form.grade.data, parent_name=form.parent.data, reason=form.reason.data, reason_other=form.reason_other.data, building=session['site'], direction='In')
+        db.session.add(post)
+        db.session.commit()
+        flash(f"You have successfully signed in to { session['site'] }!",
+              category='success')
+        return redirect(url_for('home'))
     return render_template('student-signin.html', title='Student Sign-in', form=form)
 
 # Route to the sign-out page for students
 @app.route('/student-signout', methods=['GET', 'POST'])
 def student_signout():
     form = StudentSignOutForm()
+    if form.validate_on_submit():
+        # Create an entry to add to the database
+        post = StudentLog(student_name=form.student_name.data, grade=form.grade.data, parent_name=form.parent.data, reason=form.reason.data, reason_other=form.reason_other.data, building=session['site'], direction='Out')
+        db.session.add(post)
+        db.session.commit()
+        flash(f"You have successfully signed out of { session['site'] }!",
+              category='success')
+        return redirect(url_for('home'))
     return render_template('student-signout.html', title='Student Sign-out', form=form)
 
 # Route to the sign-in page for visitors
 @app.route('/visitor-signin', methods=['GET', 'POST'])
 def visitor_signin():
     form = VisitorSignInForm()
+    if form.validate_on_submit():
+        # Create an entry to add to the database
+        post = VisitorLog(visitor_name=form.visitor_name.data, student_name=form.student_name.data, grade=form.grade.data, reason=form.reason.data, reason_other=form.reason_other.data, building=session['site'], direction='In')
+        db.session.add(post)
+        db.session.commit()
+        flash(f"You have successfully signed in to { session['site'] }!",
+              category='success')
+        return redirect(url_for('home'))
     return render_template('visitor-signin.html', title='Visitor Sign-in', form=form)
 
 # Route to the sign-out page for visitors
 @app.route('/visitor-signout', methods=['GET', 'POST'])
 def visitor_signout():
     form = VisitorSignOutForm()
+    if form.validate_on_submit():
+        # Create an entry to add to the database
+        post = VisitorLog(visitor_name=form.visitor_name.data, building=session['site'], direction='Out')
+        db.session.add(post)
+        db.session.commit()
+        flash(f"You have successfully signed out of { session['site'] }!",
+              category='success')
+        return redirect(url_for('home'))
     return render_template('visitor-signout.html', title='Visitor Sign-out', form=form)
 
 # Route with information about how to use the application

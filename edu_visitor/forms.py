@@ -1,7 +1,8 @@
 # Import the flask forms module
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from edu_visitor.models import Users
 
 # Create a registration form class
 class RegistrationForm(FlaskForm):
@@ -45,6 +46,18 @@ class RegistrationForm(FlaskForm):
         EqualTo('password')
         ])
     submit = SubmitField('Register')
+
+    # Function to validate the unique username before submitting the form
+    def validate_username(self, username):
+        user = Users.query.filter_by(username=username.data).first()
+        if user:
+            raise ValidationError('That username is taken, please choose another.')
+
+    # Function to validate the unique username before submitting the form
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data).first()
+        if user:
+            raise ValidationError('That email is taken, please choose another.')
 
 # Create a login form class
 class LoginForm(FlaskForm):
@@ -103,7 +116,7 @@ class StudentSignInForm(FlaskForm):
     reason = SelectField('Reason', choices=[
         ('Appointment', 'Appointment'),
         ('Family', 'Family'),
-        ('Sick', 'Vacation'),
+        ('Sick', 'Sick'),
         ('Vacation', 'Vacation'),
         ('Other', 'Other')
     ], validators=[

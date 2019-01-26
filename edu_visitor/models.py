@@ -23,7 +23,7 @@ class StudentLog(db.Model):
     grade = db.Column(db.String(2), nullable=False)
     parent_name = db.Column(db.String(50), nullable=False)
     reason = db.Column(db.String(20), nullable=False)
-    reason_other = db.Column(db.String(120), nullable=False)
+    reason_other = db.Column(db.String(120))
     building = db.Column(db.String(20), nullable=False)
     direction = db.Column(db.String(3), nullable=False)
     date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
@@ -36,13 +36,13 @@ class StudentLog(db.Model):
 class VisitorLog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     visitor_name = db.Column(db.String(50), nullable=False)
-    student_name = db.Column(db.String(50), nullable=False)
-    grade = db.Column(db.String(2), nullable=False)
-    reason = db.Column(db.String(20), nullable=False)
-    reason_other = db.Column(db.String(120), nullable=False)
+    student_name = db.Column(db.String(50), nullable=False, default='NA')
+    grade = db.Column(db.String(2), nullable=False, default='NA')
+    reason = db.Column(db.String(20), nullable=False, default='NA')
+    reason_other = db.Column(db.String(120))
     building = db.Column(db.String(20), nullable=False)
     direction = db.Column(db.String(3), nullable=False)
-    date_time = db.Column(db.DateTime, nullable=False)
+    date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
         return f"VisitorLog('{self.visitor_name}', '{self.student_name}', '{self.grade}', " \
