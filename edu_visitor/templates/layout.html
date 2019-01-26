@@ -18,6 +18,7 @@
     <body>
       <div class="grid-container fluid">
         <header>
+            <!-- Nav bar right side -->
             <div class="top-bar">
               <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
@@ -33,13 +34,27 @@
                   </li>
                 </ul>
               </div>
+              <!-- Nav bar right side -->
               <div class="top-bar-right">
-                <ul class="menu">
-                    <li><a href="#">Account</a></li>
-                    <li><a href="{{ url_for('register') }}">Register</a></li>
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
-                    <li><a class="button" href="{{ url_for('site_selection') }}">Change Site</a></li>
-                </ul>
+                {% if current_user.is_authenticated and session['role'] == 'admin' %}
+                    <ul class="menu">
+                        <li><a href="{{ url_for('account') }}">Account</a></li>
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a class="button mr-5" href="{{ url_for('site_selection') }}">Change Site</a></li>
+                        <li><a class="button ml-5" href="{{ url_for('logout') }}">Logout</a></li>
+                    </ul>
+                {% elif current_user.is_authenticated and session['role'] == 'staff' %}
+                    <ul class="menu">
+                        <li><a href="{{ url_for('account') }}">Account</a></li>
+                        <li><a class="button mr-5" href="{{ url_for('site_selection') }}">Change Site</a></li>
+                        <li><a class="button ml-5" href="{{ url_for('logout') }}">Logout</a></li>
+                    </ul>
+                {% else %}
+                    <ul class="menu">
+                        <li><a href="{{ url_for('login') }}">Login</a></li>
+                        <li><a class="button" href="{{ url_for('site_selection') }}">Change Site</a></li>
+                    </ul>
+                {% endif %}
               </div>
             </div>
         </header>
@@ -73,13 +88,20 @@
                     <a href="https://mndev.tech">&copy; 2019 MNDEV.TECH</a> ver. 0.1
                 </div>
                 <div class="top-bar-right">
-                    <ul class="menu">
-                        <li><a href="{{ url_for('home') }}">Home</a></li>
-                        <li><a href="{{ url_for('about') }}">About</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">EULA</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
+                    {% if current_user.is_authenticated %}
+                        <ul class="menu">
+                            <li><a href="{{ url_for('help') }}">Help</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">EULA</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    {% else %}
+                        <ul class="menu">
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">EULA</a></li>
+                            <li><a href="#">Contact</a></li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
         </footer>

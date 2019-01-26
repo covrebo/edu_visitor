@@ -1,7 +1,8 @@
-from flask import render_template, url_for, session, flash, redirect
+from flask import render_template, url_for, session, flash, redirect, request
 from edu_visitor import app, db, bcrypt
 from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
+from flask_login import login_user, current_user, logout_user, login_required
 
 # Example data from sign-in or sign-out forms
 student_log = [
@@ -99,6 +100,7 @@ def about():
 
 # Route to a registration page
 @app.route('/register', methods=['GET', 'POST'])
+@login_required
 def register():
     # TODO make registration link in navigation bar only visible to admins and page only accessible to admins
     # Create the registration form to pass to the registration page
@@ -116,18 +118,41 @@ def register():
 # Route to a login page
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # Create the registration form to pass to the registration page
     # TODO: Create the url_for the password reset link
+    # Redirect the user to the home page if they are logged in
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    # Create the login form to pass to the login template
     form = LoginForm()
+    # Validate the submitted form against the database and log in the user using Login Manager
     if form.validate_on_submit():
-        if form.email.data == 'co@co.com' and form.password.data == 'Pass':
-            flash('Login successful!', category='success')
-            return redirect(url_for('home'))
+        # Query the database to see if the submitted email exists
+        user = Users.query.filter_by(email=form.email.data).first()
+        # If the email exists and the hashed pw matched the one in the database
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            session['site'] = user.building
+            session['role'] = user.role
+            # Check if there is a next parameter in the URL b/c the user was redirected to the login page by trying to access a login only page and send them to the page they were trying to get to after they login instead of sending them to the homepage
+            next_page = request.args.get('next')
+            flash('You have successfully logged in!', category='success')
+            return redirect(next_page) if next_page else redirect(url_for('daily_summary'))
         else:
             flash(f'Login unsuccessful, please check your credentials', category='alert')
     return render_template('login.html', title='Login', form=form)
 
-# Route to a set the entrance
+# Route to a logout page
+@app.route('/logout')
+@login_required
+def logout():
+    # Log the user out
+    logout_user()
+    # Clear the session cookies
+    session.pop('site', None)
+    session.pop('role', None)
+    return redirect(url_for('home'))
+
+# Route to a set the session cookie to display the correct site for the user
 @app.route('/site-selection', methods=['GET', 'POST'])
 def site_selection():
     # Create a form to set the site value for the session
@@ -197,21 +222,25 @@ def visitor_signout():
 
 # Route with information about how to use the application
 @app.route('/help')
+@login_required
 def help():
-    # TODO: Add to the right hand or footer of the website
-    # TODO: Make visible only when logged in
     # TODO: Add content to help explain how to use the site
     return render_template('help.html', title='help')
 
 # Route to display a summary of the day's student sign-ins and sign-outs
 @app.route('/daily-summary')
+@login_required
 def daily_summary():
-    # TODO: Make this visible only when you are logged in
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
     # TODO: Only display records for the selected site
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
+# Route to display a summary of the day's student sign-ins and sign-outs
+@app.route('/account')
+@login_required
+def account():
+    return render_template('account.html', title='Account')
 
 # Enhancements
 # TODO: Add the capability to search for a day's summary
@@ -219,3 +248,4 @@ def daily_summary():
 # TODO: Add admin panel to manage users and sites
 # TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out
 # TODO: Throw an error on the sign in page if the reason = "Other" but there isn't any text in the other fields
+# TODO: Change the "Change site" button on the top right navigation bar to a drop down menu when the user is logged in
