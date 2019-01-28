@@ -16,7 +16,7 @@
               </thead>
               <tbody>
                 {% for post in student_log %}
-                    {% if post.direction == "In" %}
+                    {% if post.direction == "In" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
@@ -44,7 +44,7 @@
               </thead>
               <tbody>
                 {% for post in student_log %}
-                    {% if post.direction == "Out" %}
+                    {% if post.direction == "Out" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
@@ -72,7 +72,7 @@
               </thead>
               <tbody>
                 {% for post in visitor_log %}
-                    {% if post.direction == "In" %}
+                    {% if post.direction == "In" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.visitor_name }}</td>
                             <td>{{ post.student_name }}</td>
@@ -97,7 +97,7 @@
               </thead>
               <tbody>
                 {% for post in visitor_log %}
-                    {% if post.direction == "Out" %}
+                    {% if post.direction == "Out" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.visitor_name }}</td>
                             <td>{{ moment(post.date_time).format('LLL') }}</td>

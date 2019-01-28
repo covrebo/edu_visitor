@@ -2,6 +2,7 @@ import os
 import secrets
 from PIL import Image
 from flask import render_template, url_for, session, flash, redirect, request
+from datetime import date
 from edu_visitor import app, db, bcrypt, moment
 from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
@@ -95,10 +96,12 @@ def home():
     # TODO: Fix the frame in the home page to act correctly when the window is sized down
     return render_template('home.html')
 
+
 # Route to a page that tells about the creation of the system
 @app.route('/about')
 def about():
     return render_template('about.html', title='About')
+
 
 # Route to a registration page
 @app.route('/register', methods=['GET', 'POST'])
@@ -115,6 +118,7 @@ def register():
         flash(f'You have successfully created an account for {form.user_first_name.data} {form.user_last_name.data}!', category='success')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
 
 # Route to a login page
 @app.route('/login', methods=['GET', 'POST'])
@@ -142,6 +146,7 @@ def login():
             flash(f'Login unsuccessful, please check your credentials', category='alert')
     return render_template('login.html', title='Login', form=form)
 
+
 # Route to a logout page
 @app.route('/logout')
 @login_required
@@ -152,6 +157,7 @@ def logout():
     session.pop('site', None)
     session.pop('role', None)
     return redirect(url_for('home'))
+
 
 # Route to a set the session cookie to display the correct site for the user
 @app.route('/site-selection', methods=['GET', 'POST'])
@@ -164,6 +170,7 @@ def site_selection():
         flash('Your location has been updated!', 'success')
         return redirect(url_for('daily_summary'))
     return render_template('site-selection.html', title='Site Selection', form=form)
+
 
 # Route to the sign-in page for students
 @app.route('/student-signin', methods=['GET', 'POST'])
@@ -179,6 +186,7 @@ def student_signin():
         return redirect(url_for('home'))
     return render_template('student-signin.html', title='Student Sign-in', form=form)
 
+
 # Route to the sign-out page for students
 @app.route('/student-signout', methods=['GET', 'POST'])
 def student_signout():
@@ -192,6 +200,7 @@ def student_signout():
               category='success')
         return redirect(url_for('home'))
     return render_template('student-signout.html', title='Student Sign-out', form=form)
+
 
 # Route to the sign-in page for visitors
 @app.route('/visitor-signin', methods=['GET', 'POST'])
@@ -207,6 +216,7 @@ def visitor_signin():
         return redirect(url_for('home'))
     return render_template('visitor-signin.html', title='Visitor Sign-in', form=form)
 
+
 # Route to the sign-out page for visitors
 @app.route('/visitor-signout', methods=['GET', 'POST'])
 def visitor_signout():
@@ -221,12 +231,14 @@ def visitor_signout():
         return redirect(url_for('home'))
     return render_template('visitor-signout.html', title='Visitor Sign-out', form=form)
 
+
 # Route with information about how to use the application
 @app.route('/help')
 @login_required
 def help():
     # TODO: Add content to help explain how to use the site
     return render_template('help.html', title='help')
+
 
 # Route to display a summary of the day's student sign-ins and sign-outs
 @app.route('/daily-summary')
@@ -235,11 +247,13 @@ def daily_summary():
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
     # TODO: Only display records for the selected site
+    # current_date = date.today()
     # Query database for student visitor logs
-    student_log = StudentLog.query.order_by(StudentLog.id.desc()).all()
+    student_log = StudentLog.query.order_by(StudentLog.id.desc())
     # Query database for visitor logs
-    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc()).all()
+    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc())
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
+
 
 # Function to save a new profile picture submission form the user - used in the update account form
 def save_picture(form_picture):
@@ -260,12 +274,13 @@ def save_picture(form_picture):
     # Pass the new name of the file back so it can be used to update the database entry for the user
     return picture_file_name
 
+
 # Route to display a summary of the day's student sign-ins and sign-outs
 @app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
     # TODO: Display the filename selected to update the profile pic https://codepen.io/hidde/pen/LyLmrG
-    # TODO: Write code to delete oldprofile pics when a user updates their account
+    # TODO: Write code to delete old profile pics when a user updates their account
     form = UpdateAccountForm()
     # Update the database and session cookie with account update data
     if form.validate_on_submit():
@@ -290,6 +305,7 @@ def account():
     # Pass the correct image file to the template to display in the user account page
     image_file = url_for('static', filename='profile_pics/' + current_user.profile_image)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
+
 
 # Enhancements
 # TODO: Add the capability to search for a day's summary
