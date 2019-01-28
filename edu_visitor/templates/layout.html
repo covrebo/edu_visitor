@@ -110,5 +110,8 @@
         <script src="static/js/vendor/what-input.js"></script>
         <script src="static/js/vendor/foundation.js"></script>
         <script src="static/js/app.js"></script>
+        {% block scripts %}
+            {{ moment.include_moment() }}
+        {% endblock %}
     </body>
 </html>

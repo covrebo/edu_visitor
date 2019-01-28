@@ -2,6 +2,7 @@ from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
+from flask_moment import Moment
 import os
 
 app = Flask(__name__)
@@ -20,5 +21,8 @@ login_manager = LoginManager(app)
 # Create the route for redirects of the @login_user decorator if someone tries to login to a page without being logged in
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'warning'
+
+# Create an instance of moment for displaying correct dates and times
+moment = Moment(app)
 
 from edu_visitor import routes
