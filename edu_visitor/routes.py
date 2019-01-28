@@ -236,9 +236,9 @@ def daily_summary():
     # TODO: Create DB calls to create the dictionaries only for the current day
     # TODO: Only display records for the selected site
     # Query database for student visitor logs
-    student_log = StudentLog.query.all()
+    student_log = StudentLog.query.order_by(StudentLog.id.desc()).all()
     # Query database for visitor logs
-    visitor_log = VisitorLog.query.all()
+    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc()).all()
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
 # Function to save a new profile picture submission form the user - used in the update account form
