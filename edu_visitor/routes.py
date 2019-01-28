@@ -1,93 +1,95 @@
+import os
+import secrets
+from PIL import Image
 from flask import render_template, url_for, session, flash, redirect, request
 from edu_visitor import app, db, bcrypt
-from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm
+from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 from flask_login import login_user, current_user, logout_user, login_required
 
 # Example data from sign-in or sign-out forms
-student_log = [
-    {
-        'student_name': 'Evan Ovrebo',
-        'grade': '01',
-        'parent': 'Chris Ovrebo',
-        'reason': 'Appointment',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 11:24:35'
-    },
-    {
-        'student_name': 'Allison Ovrebo',
-        'grade': '01',
-        'parent': 'Jodi Ovrebo',
-        'reason': 'Appointment',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 12:24:35'
-    },
-    {
-        'student_name': 'Calvin Ovrebo',
-        'grade': '03',
-        'parent': 'Chris Ovrebo',
-        'reason': 'Vacation',
-        'direction': 'Out',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 13:24:35'
-    },
-    {
-        'student_name': 'Eliza Ovrebo',
-        'grade': 'KG',
-        'parent': 'Jodi Ovrebo',
-        'reason': 'Illness',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 14:24:35'
-    },
-]
-visitor_log = [
-    {
-        'student_name': 'Evan Ovrebo',
-        'grade': '01',
-        'visitor': 'Chris Ovrebo',
-        'reason': 'Classroom visit',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 11:24:35'
-    },
-    {
-        'student_name': 'Allison Ovrebo',
-        'grade': '01',
-        'visitor': 'Jodi Ovrebo',
-        'reason': 'Appointment',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 12:24:35'
-    },
-    {
-        'student_name': 'Calvin Ovrebo',
-        'grade': '03',
-        'visitor': 'Chris Ovrebo',
-        'reason': 'Vacation',
-        'direction': 'Out',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 13:24:35'
-    },
-    {
-        'student_name': 'Eliza Ovrebo',
-        'grade': 'KG',
-        'visitor': 'Jodi Ovrebo',
-        'reason': 'Illness',
-        'direction': 'In',
-        'building': 'North Elementary',
-        'timestamp': '18-Jan-2019 14:24:35'
-    },
-]
+# student_log = [
+#     {
+#         'student_name': 'Evan Ovrebo',
+#         'grade': '01',
+#         'parent': 'Chris Ovrebo',
+#         'reason': 'Appointment',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 11:24:35'
+#     },
+#     {
+#         'student_name': 'Allison Ovrebo',
+#         'grade': '01',
+#         'parent': 'Jodi Ovrebo',
+#         'reason': 'Appointment',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 12:24:35'
+#     },
+#     {
+#         'student_name': 'Calvin Ovrebo',
+#         'grade': '03',
+#         'parent': 'Chris Ovrebo',
+#         'reason': 'Vacation',
+#         'direction': 'Out',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 13:24:35'
+#     },
+#     {
+#         'student_name': 'Eliza Ovrebo',
+#         'grade': 'KG',
+#         'parent': 'Jodi Ovrebo',
+#         'reason': 'Illness',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 14:24:35'
+#     },
+# ]
+# visitor_log = [
+#     {
+#         'student_name': 'Evan Ovrebo',
+#         'grade': '01',
+#         'visitor': 'Chris Ovrebo',
+#         'reason': 'Classroom visit',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 11:24:35'
+#     },
+#     {
+#         'student_name': 'Allison Ovrebo',
+#         'grade': '01',
+#         'visitor': 'Jodi Ovrebo',
+#         'reason': 'Appointment',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 12:24:35'
+#     },
+#     {
+#         'student_name': 'Calvin Ovrebo',
+#         'grade': '03',
+#         'visitor': 'Chris Ovrebo',
+#         'reason': 'Vacation',
+#         'direction': 'Out',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 13:24:35'
+#     },
+#     {
+#         'student_name': 'Eliza Ovrebo',
+#         'grade': 'KG',
+#         'visitor': 'Jodi Ovrebo',
+#         'reason': 'Illness',
+#         'direction': 'In',
+#         'building': 'North Elementary',
+#         'timestamp': '18-Jan-2019 14:24:35'
+#     },
+# ]
 
 # Route to the home page, which includes options to sign in or sign out
+
 @app.route('/')
 @app.route('/home')
 def home():
-    # TODO: Create a quick welcome page that has four buttons: Student Sign-In, Student Sign-Out, Visitor Sign-In, and Visitor Sign-Out
-    # TODO: Flash a message that the user has successfully signed in or out
     # TODO: Finish the links and pages for the footer
     # TODO: Fix the "URL_FOR" links for the JS on the bottom of layouts.html
     # TODO: Fix the frame in the home page to act correctly when the window is sized down
@@ -102,7 +104,6 @@ def about():
 @app.route('/register', methods=['GET', 'POST'])
 @login_required
 def register():
-    # TODO make registration link in navigation bar only visible to admins and page only accessible to admins
     # Create the registration form to pass to the registration page
     form = RegistrationForm()
     if form.validate_on_submit():
@@ -234,13 +235,61 @@ def daily_summary():
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
     # TODO: Only display records for the selected site
+    # Query database for student visitor logs
+    student_log = StudentLog.query.all()
+    # Query database for visitor logs
+    visitor_log = VisitorLog.query.all()
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
+# Function to save a new profile picture submission form the user - used in the update account form
+def save_picture(form_picture):
+    # Randomize the file name to avoid conflicts in the file system
+    random_hex = secrets.token_hex(8)
+    # Get the filname and file extension of the submitted file
+    _, f_ext = os.path.splitext(form_picture.filename)
+    # Combine the random hex string and file extension to create a new name for the submitted picture file
+    picture_file_name = random_hex + f_ext
+    # Create the path to the folder where the image will be stored
+    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_file_name)
+    # Resize the picture before saving it
+    output_size = (125,125)
+    resized_image = Image.open(form_picture)
+    resized_image.thumbnail(output_size)
+    # Save the resized image to the file system
+    resized_image.save(picture_path)
+    # Pass the new name of the file back so it can be used to update the database entry for the user
+    return picture_file_name
+
 # Route to display a summary of the day's student sign-ins and sign-outs
-@app.route('/account')
+@app.route('/account', methods=['GET', 'POST'])
 @login_required
 def account():
-    return render_template('account.html', title='Account')
+    # TODO: Display the filename selected to update the profile pic https://codepen.io/hidde/pen/LyLmrG
+    # TODO: Write code to delete oldprofile pics when a user updates their account
+    form = UpdateAccountForm()
+    # Update the database and session cookie with account update data
+    if form.validate_on_submit():
+        # Check for an updated profile picture submission
+        if form.picture.data:
+            # Call the function to rename the picture and save it to the filesystem
+            picture_file = save_picture(form.picture.data)
+            # Update the database entry for the user
+            current_user.profile_image = picture_file
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.building = form.building.data
+        session['site'] = current_user.building
+        db.session.commit()
+        flash('Your account has been updated', category='success')
+        return redirect(url_for('account'))
+    # Pre-populate the form with the current user's info
+    elif request.method == 'GET':
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        form.building.data = current_user.building
+    # Pass the correct image file to the template to display in the user account page
+    image_file = url_for('static', filename='profile_pics/' + current_user.profile_image)
+    return render_template('account.html', title='Account', image_file=image_file, form=form)
 
 # Enhancements
 # TODO: Add the capability to search for a day's summary

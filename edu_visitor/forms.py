@@ -1,8 +1,10 @@
 # Import the flask forms module
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from edu_visitor.models import Users
+from flask_login import current_user
 
 # Create a registration form class
 class RegistrationForm(FlaskForm):
@@ -33,7 +35,7 @@ class RegistrationForm(FlaskForm):
         ('High School', 'High School'),
         ('Middle School', 'Middle School'),
         ('North Elementary', 'North Elementary'),
-        ('South Elementary', 'South Elemtary'),
+        ('South Elementary', 'South Elementary'),
         ('Early Childhood', 'Early Childhood')
         ], validators=[
         DataRequired()
@@ -218,3 +220,40 @@ class VisitorSignOutForm(FlaskForm):
         DataRequired(),
         ])
     submit = SubmitField('Sign-out')
+
+# Create an account update form class
+class UpdateAccountForm(FlaskForm):
+    # Form fields with validators
+    username = StringField('Username', validators=[
+        DataRequired(),
+        Length(min=2, max=20)
+        ])
+    email =  StringField('Email', validators=[
+        DataRequired(),
+        Email()
+        ])
+    building = SelectField('Default Building', choices=[
+        ('High School', 'High School'),
+        ('Middle School', 'Middle School'),
+        ('North Elementary', 'North Elementary'),
+        ('South Elementary', 'South Elementary'),
+        ('Early Childhood', 'Early Childhood')
+        ], validators=[
+        DataRequired()
+    ])
+    picture = FileField('Update Profile Picture', id="file-upload", validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField('Update')
+
+    # Function to validate the unique username before submitting the form
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            user = Users.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError('That username is taken, please choose another.')
+
+    # Function to validate the unique username before submitting the form
+    def validate_email(self, email):
+        if email.data != current_user.email:
+            user = Users.query.filter_by(email=email.data).first()
+            if user:
+                raise ValidationError('That email is taken, please choose another.')

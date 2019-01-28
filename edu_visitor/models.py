@@ -20,7 +20,7 @@ class Users(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
-        return f"User('{self.username}', '{self.user_first_name}', '{self.user_last_name}', " \
+        return f"User('{self.username}', '{self.user_first_name}', '{self.user_last_name}', '{self.profile_image}' " \
             f"'{self.email}', '{self.role}', '{self.building}')"
 
 class StudentLog(db.Model):

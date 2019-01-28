@@ -20,9 +20,9 @@
                         <tr>
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
-                            <td>{{ post.parent }}</td>
+                            <td>{{ post.parent_name }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ post.timestamp }}</td>
+                            <td>{{ post.date_time }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -48,9 +48,9 @@
                         <tr>
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
-                            <td>{{ post.parent }}</td>
+                            <td>{{ post.parent_name }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ post.timestamp }}</td>
+                            <td>{{ post.date_time }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -74,11 +74,11 @@
                 {% for post in visitor_log %}
                     {% if post.direction == "In" %}
                         <tr>
-                            <td>{{ post.visitor }}</td>
+                            <td>{{ post.visitor_name }}</td>
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ post.timestamp }}</td>
+                            <td>{{ post.date_time }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -99,8 +99,8 @@
                 {% for post in visitor_log %}
                     {% if post.direction == "Out" %}
                         <tr>
-                            <td>{{ post.visitor }}</td>
-                            <td>{{ post.timestamp }}</td>
+                            <td>{{ post.visitor_name }}</td>
+                            <td>{{ post.date_time }}</td>
                         </tr>
                     {% endif %}
                 {% endfor %}
