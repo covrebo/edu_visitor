@@ -22,7 +22,7 @@
                             <td>{{ post.grade }}</td>
                             <td>{{ post.parent_name }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ moment(post.date_time).format('LLL') }}</td>
+                            <td><a href="{{ url_for('update_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -50,7 +50,7 @@
                             <td>{{ post.grade }}</td>
                             <td>{{ post.parent_name }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ moment(post.date_time).format('LLL') }}</td>
+                            <td><a href="{{ url_for('update_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -78,7 +78,7 @@
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
                             <td>{{ post.reason }}</td>
-                            <td>{{ moment(post.date_time).format('LLL') }}</td>
+                            <td><a href="{{ url_for('update_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -100,7 +100,7 @@
                     {% if post.direction == "Out" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.visitor_name }}</td>
-                            <td>{{ moment(post.date_time).format('LLL') }}</td>
+                            <td><a href="{{ url_for('update_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}

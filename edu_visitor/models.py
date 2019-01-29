@@ -35,7 +35,7 @@ class StudentLog(db.Model):
     date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"StudentLog('{self.student_name}', '{self.grade}', '{self.parent_name}', " \
+        return f"StudentLog('{self.id}, {self.student_name}', '{self.grade}', '{self.parent_name}', " \
             f"'{self.reason}', '{self.reason_other}', '{self.building}, '{self.direction}', " \
             f"'{self.date_time}')"
 
@@ -51,7 +51,7 @@ class VisitorLog(db.Model):
     date_time = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
 
     def __repr__(self):
-        return f"VisitorLog('{self.visitor_name}', '{self.student_name}', '{self.grade}', " \
+        return f"VisitorLog('{self.id}, {self.visitor_name}', '{self.student_name}', '{self.grade}', " \
             f"'{self.reason}', '{self.reason_other}', '{self.building}, '{self.direction}', " \
             f"'{self.date_time}')"
 

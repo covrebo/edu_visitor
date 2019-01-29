@@ -249,10 +249,25 @@ def daily_summary():
     # TODO: Only display records for the selected site
     # current_date = date.today()
     # Query database for student visitor logs
-    student_log = StudentLog.query.order_by(StudentLog.id.desc())
+    student_log = StudentLog.query.order_by(StudentLog.id.desc()).all()
     # Query database for visitor logs
-    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc())
+    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc()).all()
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
+
+
+# A route to update a specific post for students
+@app.route('/student-signin/<int:post_id>')
+@login_required
+def update_student_signin(post_id):
+    post = StudentLog.query.get_or_404(post_id)
+    return render_template('student-update.html', title="Update Entry", post=post)
+
+# A route to update a specific post for visitors
+@app.route('/visitor-signin/<int:post_id>')
+@login_required
+def update_visitor_signin(post_id):
+    post = VisitorLog.query.get_or_404(post_id)
+    return render_template('visitor-update.html', title="Update Entry", post=post)
 
 
 # Function to save a new profile picture submission form the user - used in the update account form

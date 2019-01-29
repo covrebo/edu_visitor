@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="grid-x grid-margin-x align-center">
+        <!-- Student Sign-in Report -->
+        <div class="cell large-6 callout">
+            <h3 class="table-label text-center">Student Sign-in/Sign-out Summary</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data Field</th>
+                        <th>Data</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Student Name:</td>
+                        <td>{{ post.student_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Grade:</td>
+                        <td>{{ post.grade }}</td>
+                    </tr>
+                    <tr>
+                        <td>Parent/Guardian:</td>
+                        <td>{{ post.parent_name }}</td>
+                    </tr>
+                    <tr>
+                        <td>Reason:</td>
+                        <td>{{ post.reason }}</td>
+                    </tr>
+                    <tr>
+                        <td>Reason (other):</td>
+                        <td>{{ post.reason_other }}</td>
+                    </tr>
+                    <tr>
+                        <td>Direction:</td>
+                        <td>{{ post.direction }}</td>
+                    </tr>
+                    <tr>
+                        <td>Time:</td>
+                        <td>{{ moment(post.date_time).format('LLL') }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="grid-x grid-margin-x align-center">
+                <div class="cell medium-3">
+                        <a class="button expanded" href="#">Update</a>
+                </div>
+                <div class="cell medium-3">
+                        <a class="button expanded" href="#">Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
