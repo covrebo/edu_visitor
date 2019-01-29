@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, session, flash, redirect, request
 from datetime import date
 from edu_visitor import app, db, bcrypt, moment
-from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm
+from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm, StudentUpdateForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -162,6 +162,7 @@ def logout():
 # Route to a set the session cookie to display the correct site for the user
 @app.route('/site-selection', methods=['GET', 'POST'])
 def site_selection():
+    # TODO: Create logic to send to home if no user is logged in, otherwise send to daily-summary once the form is submitted.
     # Create a form to set the site value for the session
     form = SiteSelectionForm()
     if form.validate_on_submit():
@@ -246,7 +247,6 @@ def help():
 def daily_summary():
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
-    # TODO: Only display records for the selected site
     # current_date = date.today()
     # Query database for student visitor logs
     student_log = StudentLog.query.order_by(StudentLog.id.desc()).all()
@@ -255,19 +255,58 @@ def daily_summary():
     return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
 
 
-# A route to update a specific post for students
+# A route to view a specific post for students
 @app.route('/student-signin/<int:post_id>')
+@login_required
+def view_student_signin(post_id):
+    post = StudentLog.query.get_or_404(post_id)
+    return render_template('student-view.html', title="Update Entry", post=post)
+
+
+# A route to update a specific post for students
+@app.route('/student-signin/<int:post_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_student_signin(post_id):
     post = StudentLog.query.get_or_404(post_id)
-    return render_template('student-update.html', title="Update Entry", post=post)
+    form = StudentUpdateForm()
+    if form.validate_on_submit():
+        post.student_name = form.student_name.data
+        post.grade = form.grade.data
+        post.parent_name = form.parent.data
+        post.reason = form.reason.data
+        post.reason_other = form.reason_other.data
+        post.direction = form.direction.data
+        db.session.commit()
+        flash("Your post has been updated.", 'success')
+        return redirect(url_for('daily_summary'))
+    # Pre-populate the form
+    elif request.method == 'GET':
+        form.student_name.data = post.student_name
+        form.grade.data = post.grade
+        form.parent.data = post.parent_name
+        form.reason.data = post.reason
+        form.reason_other.data = post.reason_other
+        form.direction.data = post.direction
+    return render_template('student-update.html', title="Update Entry", post=post, form=form)
 
-# A route to update a specific post for visitors
+
+# A route to delete a specific post for students
+@app.route('/student-signin/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_student_signin(post_id):
+    post = StudentLog.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('The entry has been deleted.', category='success')
+    return redirect(url_for('daily_summary'))
+
+
+# A route to view a specific post for visitors
 @app.route('/visitor-signin/<int:post_id>')
 @login_required
-def update_visitor_signin(post_id):
+def view_visitor_signin(post_id):
     post = VisitorLog.query.get_or_404(post_id)
-    return render_template('visitor-update.html', title="Update Entry", post=post)
+    return render_template('visitor-view.html', title="Update Entry", post=post)
 
 
 # Function to save a new profile picture submission form the user - used in the update account form
@@ -329,3 +368,4 @@ def account():
 # TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out
 # TODO: Throw an error on the sign in page if the reason = "Other" but there isn't any text in the other fields
 # TODO: Change the "Change site" button on the top right navigation bar to a drop down menu when the user is logged in
+# TODO: Add the option to receive a confirmation email when signing in or signing out

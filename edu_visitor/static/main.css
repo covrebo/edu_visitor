@@ -33,6 +33,10 @@
   border-radius: 0;
 }
 
+.m-10 {
+    margin: 10px;
+}
+
 .mt-5 {
     margin-top: 5px;
 }
