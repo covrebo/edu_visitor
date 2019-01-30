@@ -247,12 +247,19 @@ def help():
 def daily_summary():
     # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
-    # current_date = date.today()
-    # Query database for student visitor logs
-    student_log = StudentLog.query.order_by(StudentLog.id.desc()).all()
-    # Query database for visitor logs
-    visitor_log = VisitorLog.query.order_by(VisitorLog.id.desc()).all()
-    return render_template('daily-summary.html', student_log=student_log, visitor_log=visitor_log, title='Daily Summary')
+    # Query database for student visitor logs entering the building and get the correct page to display from the URL
+    student_page_in = request.args.get('student_page_in', 1, type=int)
+    student_log_in = StudentLog.query.order_by(StudentLog.id.desc()).filter_by(direction='In', building=session['site']).paginate(page=student_page_in, per_page=5)
+    # Query database for student visitor logs leaving the building
+    student_page_out = request.args.get('student_page_out', 1, type=int)
+    student_log_out = StudentLog.query.order_by(StudentLog.id.desc()).filter_by(direction='Out', building=session['site']).paginate(page=student_page_out, per_page=5)
+    # Query database for visitor logs entering the building
+    visitor_page_in = request.args.get('visitor_page_in', 1, type=int)
+    visitor_log_in = VisitorLog.query.order_by(VisitorLog.id.desc()).filter_by(direction='In', building=session['site']).paginate(page=visitor_page_in, per_page=5)
+    # Query database for visitor logs leaving the building
+    visitor_page_out = request.args.get('visitor_page_out', 1, type=int)
+    visitor_log_out = VisitorLog.query.order_by(VisitorLog.id.desc()).filter_by(direction='Out', building=session['site']).paginate(page=visitor_page_out, per_page=5)
+    return render_template('daily-summary.html', student_log_in=student_log_in, student_log_out=student_log_out, visitor_log_in=visitor_log_in, visitor_log_out=visitor_log_out, title='Daily Summary')
 
 
 # A route to view a specific post for students

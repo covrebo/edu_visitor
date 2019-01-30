@@ -81,7 +81,7 @@ class SiteSelectionForm(FlaskForm):
         ], choices=[('High School', 'High School'),
                     ('Middle School', 'Middle School'),
                     ('North Elementary', 'North Elementary'),
-                    ('South Elementary', 'South Elemtary'),
+                    ('South Elementary', 'South Elementary'),
                     ('Early Childhood', 'Early Childhood')
         ])
     submit = SubmitField('Set Site')
@@ -270,7 +270,7 @@ class VisitorSignOutForm(FlaskForm):
         ])
     submit = SubmitField('Sign-out')
 
-# Create a visitor sign-in form class
+# Create a visitor sign-in update form class
 class VisitorUpdateForm(FlaskForm):
     # Form fields with validators
     visitor_name = StringField('Visitor Name', validators=[
@@ -315,7 +315,7 @@ class VisitorUpdateForm(FlaskForm):
     ], validators=[
         DataRequired()
     ])
-    submit = SubmitField('Sign-in')
+    submit = SubmitField('Update')
 
 # Create an account update form class
 class UpdateAccountForm(FlaskForm):
