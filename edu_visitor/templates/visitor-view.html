@@ -44,10 +44,28 @@
             </table>
             <div class="grid-x grid-margin-x align-center">
                 <div class="cell medium-3">
-                        <a class="button expanded" href="#">Update</a>
+                        <a class="button expanded" href="{{ url_for('update_visitor_signin', post_id=post.id) }}">Update</a>
                 </div>
                 <div class="cell medium-3">
-                        <a class="button expanded" href="#">Delete</a>
+                        <a class="button expanded alert" data-open="DeleteModal" href="#">Delete</a>
+                </div>
+                <div class="reveal" id="DeleteModal" data-reveal>
+                    <h1 class="">Delete entry?</h1>
+                    <p class="lead">Choosing delete will permanently remove this entry from the database.</p>
+                    <p class="alert label">This action cannot be undone.</p>
+                    <div class="grid-x grid-margin-x align-left">
+                        <div class="cell small-3">
+                        <button class="button expanded" data-close>Cancel</button>
+                        </div>
+                        <div class="cell small-3">
+                        <form action="{{ url_for('delete_visitor_signin', post_id=post.id) }}" method="POST">
+                            <input class="button expanded alert" type="submit" value="Delete">
+                        </form>
+                        </div>
+                    </div>
+                    <button class="close-button" data-close aria-label="Close modal" type="button">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
             </div>
         </div>

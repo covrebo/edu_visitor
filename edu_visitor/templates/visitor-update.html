@@ -1,55 +1,72 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-x grid-margin-x align-center">
-        <!-- Student Sign-in Report -->
-        <div class="cell large-6 callout">
-            <h3 class="table-label text-center">Visitor Sign-in/Sign-out Summary</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data Field</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Visitor Name:</td>
-                        <td>{{ post.visitor_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Student Name:</td>
-                        <td>{{ post.student_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Grade:</td>
-                        <td>{{ post.grade }}</td>
-                    </tr>
-                    <tr>
-                        <td>Reason:</td>
-                        <td>{{ post.reason }}</td>
-                    </tr>
-                    <tr>
-                        <td>Reason (other):</td>
-                        <td>{{ post.reason_other }}</td>
-                    </tr>
-                    <tr>
-                        <td>Direction:</td>
-                        <td>{{ post.direction }}</td>
-                    </tr>
-                    <tr>
-                        <td>Time:</td>
-                        <td>{{ moment(post.date_time).format('LLL') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="grid-x grid-margin-x align-center">
-                <div class="cell medium-3">
-                        <a class="button expanded" href="#">Update</a>
-                </div>
-                <div class="cell medium-3">
-                        <a class="button expanded" href="#">Delete</a>
-                </div>
-            </div>
+    <div class="grid-container log-in-form">
+        <div>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <h2 class="text-center">Visitor Entry Updaten</h2>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.visitor_name.label(class="") }}
+                            {% if form.visitor_name.errors %}
+                                {{ form.visitor_name(class='form-input-alert', placeholder='Visitor name') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.visitor_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.visitor_name(class="", placeholder="Visitor name") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.student_name.label(class="") }}
+                            {% if form.student_name.errors %}
+                                {{ form.student_name(class='form-input-alert', placeholder="Student name") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.student_name.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.student_name(class="", placeholder="Student name") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.grade.label(class="") }}
+                            {{ form.grade(class="") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.reason.label(class="") }}
+                            {{ form.reason(class="") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.reason_other.label(class="") }}
+                            {{ form.reason_other(class="", placeholder="If meeting with a teacher, specify the teacher here") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.direction.label(class="") }}
+                            {{ form.direction(class="") }}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-4">
+                            {{ form.submit(class="button large expanded") }}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 {% endblock content %}

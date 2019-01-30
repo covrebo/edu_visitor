@@ -4,7 +4,7 @@ from PIL import Image
 from flask import render_template, url_for, session, flash, redirect, request
 from datetime import date
 from edu_visitor import app, db, bcrypt, moment
-from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm, StudentUpdateForm
+from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm, StudentUpdateForm, VisitorUpdateForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 from flask_login import login_user, current_user, logout_user, login_required
 
@@ -309,6 +309,44 @@ def view_visitor_signin(post_id):
     return render_template('visitor-view.html', title="Update Entry", post=post)
 
 
+# A route to update a specific post for visitors
+@app.route('/visitor-signin/<int:post_id>/update', methods=['GET', 'POST'])
+@login_required
+def update_visitor_signin(post_id):
+    post = VisitorLog.query.get_or_404(post_id)
+    form = VisitorUpdateForm()
+    if form.validate_on_submit():
+        post.visitor_name = form.visitor_name.data
+        post.student_name = form.student_name.data
+        post.grade = form.grade.data
+        post.reason = form.reason.data
+        post.reason_other = form.reason_other.data
+        post.direction = form.direction.data
+        db.session.commit()
+        flash("Your post has been updated.", 'success')
+        return redirect(url_for('daily_summary'))
+    # Pre-populate the form
+    elif request.method == 'GET':
+        form.visitor_name.data = post.visitor_name
+        form.student_name.data = post.student_name
+        form.grade.data = post.grade
+        form.reason.data = post.reason
+        form.reason_other.data = post.reason_other
+        form.direction.data = post.direction
+    return render_template('visitor-update.html', title="Update Entry", post=post, form=form)
+
+
+# A route to delete a specific post for visitor
+@app.route('/visitor-signin/<int:post_id>/delete', methods=['POST'])
+@login_required
+def delete_visitor_signin(post_id):
+    post = VisitorLog.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    flash('The entry has been deleted.', category='success')
+    return redirect(url_for('daily_summary'))
+
+
 # Function to save a new profile picture submission form the user - used in the update account form
 def save_picture(form_picture):
     # Randomize the file name to avoid conflicts in the file system
@@ -364,7 +402,7 @@ def account():
 # Enhancements
 # TODO: Add the capability to search for a day's summary
 # TODO: Add the ability to search for an individual's activity
-# TODO: Add admin panel to manage users and sites
+# TODO: Add admin panel to manage users and sites and reasons
 # TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out
 # TODO: Throw an error on the sign in page if the reason = "Other" but there isn't any text in the other fields
 # TODO: Change the "Change site" button on the top right navigation bar to a drop down menu when the user is logged in
