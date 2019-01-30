@@ -162,14 +162,13 @@ def logout():
 # Route to a set the session cookie to display the correct site for the user
 @app.route('/site-selection', methods=['GET', 'POST'])
 def site_selection():
-    # TODO: Create logic to send to home if no user is logged in, otherwise send to daily-summary once the form is submitted.
     # Create a form to set the site value for the session
     form = SiteSelectionForm()
     if form.validate_on_submit():
         # Update site value in session cookie
         session['site'] = form.site.data
         flash('Your location has been updated!', 'success')
-        return redirect(url_for('daily_summary'))
+        return redirect(url_for('daily_summary')) if current_user.is_authenticated else redirect(url_for('home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
 
 
@@ -245,7 +244,6 @@ def help():
 @app.route('/daily-summary')
 @login_required
 def daily_summary():
-    # TODO: When you click on a specific log entry, it brings you to a page where an admin can update or delete it
     # TODO: Create DB calls to create the dictionaries only for the current day
     # Query database for student visitor logs entering the building and get the correct page to display from the URL
     student_page_in = request.args.get('student_page_in', 1, type=int)

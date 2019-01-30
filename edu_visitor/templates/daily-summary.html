@@ -27,7 +27,7 @@
               </tbody>
             </table>
             <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in student_log_in.iter_pages() %}
+                {% for page_num in student_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == student_log_in.page %}
                         <li><a class='current' href="{{ url_for('daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != student_log_in.page and page_num %}
@@ -64,7 +64,7 @@
               </tbody>
             </table>
             <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in student_log_out.iter_pages() %}
+                {% for page_num in student_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == student_log_out.page %}
                         <li><a class='current' href="{{ url_for('daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != student_log_out.page and page_num %}
@@ -103,7 +103,7 @@
               </tbody>
             </table>
             <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in visitor_log_in.iter_pages() %}
+                {% for page_num in visitor_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == visitor_log_in.page %}
                         <li><a class='current' href="{{ url_for('daily_summary', visitor_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != visitor_log_in.page and page_num %}
@@ -136,7 +136,7 @@
               </tbody>
             </table>
             <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in visitor_log_out.iter_pages() %}
+                {% for page_num in visitor_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == visitor_log_out.page %}
                         <li><a class='current' href="{{ url_for('daily_summary', visitor_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != visitor_log_out.page and page_num %}
