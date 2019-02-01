@@ -1,6 +1,7 @@
-from edu_visitor import db, login_manager
+from edu_visitor import db, login_manager, app
 from flask_login import UserMixin
 from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 # Function to get login manager to find user id in database (from documentation)
 @login_manager.user_loader
@@ -18,6 +19,23 @@ class Users(db.Model, UserMixin):
     building = db.Column(db.String(20), nullable=False)
     profile_image = db.Column(db.String(20), default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+
+    # Method for generating tokens for the password reset emails
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        # Return the token
+        return s.dumps({'user_id': self.id}).decode('utf-8')
+
+    @staticmethod
+    # Method for verifying a token from the password reset email
+    def verify_reset_token(token):
+        s = Serializer(app.config['SECRET_KEY'])
+        # Check for an invalid (expired) token
+        try:
+            user_id = s.loads(token)['user_id']
+        except:
+            return None
+        return Users.query.get(user_id)
 
     def __repr__(self):
         return f"User('{self.username}', '{self.user_first_name}', '{self.user_last_name}', '{self.profile_image}' " \

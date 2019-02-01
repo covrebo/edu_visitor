@@ -337,7 +337,9 @@ class UpdateAccountForm(FlaskForm):
         ], validators=[
         DataRequired()
     ])
-    picture = FileField('Update Profile Picture', id="file-upload", validators=[FileAllowed(['jpg', 'png'])])
+    picture = FileField('Update Profile Picture', id="file-upload", validators=[
+        FileAllowed(['jpg', 'png'])
+    ])
     submit = SubmitField('Update')
 
     # Function to validate the unique username before submitting the form
@@ -353,3 +355,28 @@ class UpdateAccountForm(FlaskForm):
             user = Users.query.filter_by(email=email.data).first()
             if user:
                 raise ValidationError('That email is taken, please choose another.')
+
+# A form to request a password reset email
+class RequestResetForm(FlaskForm):
+    email = StringField('Email', validators=[
+        DataRequired(),
+        Email()
+    ])
+    submit = SubmitField('Request Password Reset')
+
+    # Function to validate the email before submitting the form
+    def validate_email(self, email):
+        user = Users.query.filter_by(email=email.data).first()
+        if user is None:
+            raise ValidationError('This email does not exist in our records, please register for an account.')
+
+# A form to reset a password
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('New Password', validators=[
+        DataRequired()
+    ])
+    password_confirmation = PasswordField('Confirm New Password', validators=[
+        DataRequired(),
+        EqualTo('password')
+    ])
+    submit = SubmitField('Reset Password')

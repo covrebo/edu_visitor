@@ -3,10 +3,11 @@ import secrets
 from PIL import Image
 from flask import render_template, url_for, session, flash, redirect, request
 from datetime import date
-from edu_visitor import app, db, bcrypt, moment
-from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm, StudentUpdateForm, VisitorUpdateForm
+from edu_visitor import app, db, bcrypt, moment, mail
+from edu_visitor.forms import RegistrationForm, LoginForm, SiteSelectionForm, StudentSignInForm, StudentSignOutForm, VisitorSignInForm, VisitorSignOutForm, UpdateAccountForm, StudentUpdateForm, VisitorUpdateForm, RequestResetForm, ResetPasswordForm
 from edu_visitor.models import Users, StudentLog, VisitorLog, Sites, Roles
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Message
 
 # Example data from sign-in or sign-out forms
 # student_log = [
@@ -403,6 +404,48 @@ def account():
     image_file = url_for('static', filename='profile_pics/' + current_user.profile_image)
     return render_template('account.html', title='Account', image_file=image_file, form=form)
 
+# A method to compose an email to send a reset password link to
+def send_reset_email(user):
+    token = user.get_reset_token()
+    msg = Message('Password Reset Request', sender='visitors@isd508.org', recipients=[user.email])
+    msg.body = f'''To reset your password visit the following link:
+{url_for('reset_token', token=token, _external=True)}
+
+If you did not make this request, ignore this email and no changes will be made.
+'''
+    mail.send(msg)
+
+# A route for users to enter their email address to get a password reset link
+@app.route('/reset_password', methods=['GET', 'POST'])
+def reset_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = Users.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash('An email has been sent with instructions to reset your password.', category='secondary')
+        return redirect(url_for('login'))
+    return render_template('reset-request.html', title='Reset Password', form=form)
+
+# A route for users to reset their passwords
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_token(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    user = Users.verify_reset_token(token)
+    if user is None:
+        flash('That is an invalid or expired token.', 'warning')
+        return redirect(url_for('reset_request'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        # Hash the password from the registration form
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user.password = hashed_pw
+        db.session.commit()
+        flash(f'You have successfully updated your password!', category='success')
+        return redirect(url_for('login'))
+    return render_template('reset-token.html', title='Reset Password', form=form)
 
 # Enhancements
 # TODO: Add the capability to search for a day's summary

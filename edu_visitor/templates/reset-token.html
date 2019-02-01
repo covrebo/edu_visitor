@@ -5,22 +5,7 @@
             <form method="POST" action="">
                 {{ form.hidden_tag() }}
                 <fieldset>
-                    <h2 class="text-center">Login</h2>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.email.label(class="") }}
-                            {% if form.email.errors %}
-                                {{ form.email(class='form-input-alert', placeholder="Login with your email") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.email.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.email(class="", placeholder="Login with your email") }}
-                            {% endif %}
-                        </div>
-                    </div>
+                    <h2 class="text-center">Reset Password</h2>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
                             {{ form.password.label(class="") }}
@@ -38,8 +23,17 @@
                     </div>
                     <div class="grid-x grid-margin-x align-center">
                         <div class="cell large-6">
-                            {{ form.remember() }}
-                            {{ form.remember.label() }}
+                            {{ form.password_confirmation.label(class="") }}
+                            {% if form.password_confirmation.errors %}
+                                {{ form.password_confirmation(class='form-input-alert') }}
+                                    <div class="callout small alert">
+                                        {% for error in form.password_confirmation.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.password_confirmation(class="") }}
+                            {% endif %}
                         </div>
                     </div>
                     <div class="grid-x grid-margin-x align-center">
@@ -49,11 +43,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-        <div class="grid-x grid-margin-x align-center mt-5">
-            <small class="small cell large-8 text-center">
-                <span class="muted">Forget your password? </span><a href="{{ url_for('reset_request') }}">Reset</a>
-            </small>
         </div>
     </div>
 {% endblock content %}

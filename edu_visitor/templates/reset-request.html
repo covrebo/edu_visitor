@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="grid-container log-in-form">
+        <div>
+            <form method="POST" action="">
+                {{ form.hidden_tag() }}
+                <fieldset>
+                    <h2 class="text-center">Request a Passsword Reset</h2>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-6">
+                            {{ form.email.label(class="") }}
+                            {% if form.email.errors %}
+                                {{ form.email(class='form-input-alert', placeholder="Email") }}
+                                    <div class="callout small alert">
+                                        {% for error in form.email.errors %}
+                                            <small>Error: {{ error }}</small>
+                                        {% endfor %}
+                                    </div>
+                            {% else %}
+                                {{ form.email(class="", placeholder="Email") }}
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="grid-x grid-margin-x align-center">
+                        <div class="cell large-4">
+                            {{ form.submit(class="button expanded") }}
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+{% endblock content %}
