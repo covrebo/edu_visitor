@@ -39,8 +39,10 @@ def create_app(config_class=Config):
     from edu_visitor.users.routes import users
     from edu_visitor.visitor_logs.routes import visitor_logs
     from edu_visitor.main.routes import main
+    from edu_visitor.errors.handlers import errors
     app.register_blueprint(users)
     app.register_blueprint(visitor_logs)
     app.register_blueprint(main)
+    app.register_blueprint(errors)
 
     return app
