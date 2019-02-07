@@ -106,3 +106,6 @@ venv.bak/
 # PyCharm Stuff
 .xml
 .idea/
+
+# User files
+static/profile_pics/
