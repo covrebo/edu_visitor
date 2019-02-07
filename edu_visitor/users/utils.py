@@ -1,8 +1,8 @@
 import os
 import secrets
 from PIL import Image
-from flask import url_for
-from edu_visitor import app, mail
+from flask import url_for, current_app
+from edu_visitor import mail
 from flask_mail import Message
 
 # Function to save a new profile picture submission form the user - used in the update account form
@@ -14,7 +14,7 @@ def save_picture(form_picture):
     # Combine the random hex string and file extension to create a new name for the submitted picture file
     picture_file_name = random_hex + f_ext
     # Create the path to the folder where the image will be stored
-    picture_path = os.path.join(app.root_path, 'static/profile_pics', picture_file_name)
+    picture_path = os.path.join(current_app.root_path, 'static/profile_pics', picture_file_name)
     # Resize the picture before saving it
     output_size = (125,125)
     resized_image = Image.open(form_picture)
