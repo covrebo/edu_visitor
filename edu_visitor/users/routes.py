@@ -29,7 +29,6 @@ def register():
 # Route to a login page
 @users.route('/login', methods=['GET', 'POST'])
 def login():
-    # TODO: Create the url_for the password reset link
     # Redirect the user to the home page if they are logged in
     if current_user.is_authenticated:
         return redirect(url_for('main.home'))

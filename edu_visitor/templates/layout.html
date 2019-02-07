@@ -94,14 +94,12 @@
                     {% if current_user.is_authenticated %}
                         <ul class="menu">
                             <li><a href="{{ url_for('main.help') }}">Help</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">EULA</a></li>
+                            <li><a href="{{ url_for('main.privacy') }}">Privacy Policy</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                     {% else %}
                         <ul class="menu">
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">EULA</a></li>
+                            <li><a href="{{ url_for('main.privacy') }}">Privacy Policy</a></li>
                             <li><a href="#">Contact</a></li>
                         </ul>
                     {% endif %}

@@ -46,3 +46,12 @@ def create_app(config_class=Config):
     app.register_blueprint(errors)
 
     return app
+
+# Enhancements
+	# TODO: Add the capability to search for a day's summary
+	# TODO: Add the ability to search for an individual's activity
+	# TODO: Add admin panel to manage users and sites and reasons
+	# TODO: Add the option of choosing from a list of signed in visitors to a visitor that is signing out
+	# TODO: Throw an error on the sign in page if the reason = "Other" but there isn't any text in the other fields
+	# TODO: Change the "Change site" button on the top right navigation bar to a drop down menu when the user is logged in
+	# TODO: Add the option to receive a confirmation email when signing in or signing out

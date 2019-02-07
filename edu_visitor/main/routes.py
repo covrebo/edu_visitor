@@ -16,7 +16,24 @@ def home():
 # Route to a page that tells about the creation of the system
 @main.route('/about')
 def about():
+    # TODO: Create content for the about page
     return render_template('about.html', title='About')
+
+# Route to a page that tells about the creation of the system
+@main.route('/privacy')
+def privacy():
+    return render_template('privacy-policy.html', title='Privacy Policy')
+
+
+# Route with information about how to use the application
+@main.route('/help')
+@login_required
+def help():
+    # TODO: Add content to help explain how to use the site
+    return render_template('help.html', title='help')
+
+
+# TODO: Route and template for a contact form
 
 
 # Route to a set the session cookie to display the correct site for the user
@@ -30,11 +47,3 @@ def site_selection():
         flash('Your location has been updated!', 'success')
         return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
-
-
-# Route with information about how to use the application
-@main.route('/help')
-@login_required
-def help():
-    # TODO: Add content to help explain how to use the site
-    return render_template('help.html', title='help')
