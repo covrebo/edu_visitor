@@ -106,7 +106,8 @@ def about():
 
 # Route to a registration page
 @app.route('/register', methods=['GET', 'POST'])
-@login_required
+# Require users to login to access the registration page after an admin user has been created
+# @login_required
 def register():
     # Create the registration form to pass to the registration page
     form = RegistrationForm()

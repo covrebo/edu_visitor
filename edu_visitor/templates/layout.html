@@ -51,6 +51,9 @@
                     </ul>
                 {% else %}
                     <ul class="menu">
+                        <!-- Remove Register link once an admin user has been created -->
+                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <!-- Remove the above link once an administrator account has been created -->
                         <li><a href="{{ url_for('login') }}">Login</a></li>
                         <li><a class="button" href="{{ url_for('site_selection') }}">Change Site</a></li>
                     </ul>
