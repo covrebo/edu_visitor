@@ -11,16 +11,16 @@
         </div>
         <div class="grid-x grid-margin-x align-center home-border">
             <div class="cell medium-3">
-                <a href="{{ url_for('student_signin') }}" class="button large expanded">Student Sign-in</a>
+                <a href="{{ url_for('visitor_logs.student_signin') }}" class="button large expanded">Student Sign-in</a>
             </div>
             <div class="cell medium-3">
-                <a href="{{ url_for('student_signout') }}" class="button large expanded">Student Sign-out</a>
+                <a href="{{ url_for('visitor_logs.student_signout') }}" class="button large expanded">Student Sign-out</a>
             </div>
             <div class="cell medium-3">
-                <a href="{{ url_for('visitor_signin') }}" class="button large expanded">Visitor Sign-in</a>
+                <a href="{{ url_for('visitor_logs.visitor_signin') }}" class="button large expanded">Visitor Sign-in</a>
             </div>
             <div class="cell medium-3">
-                <a href="{{ url_for('visitor_signout') }}" class="button large expanded">Visitor Sign-out</a>
+                <a href="{{ url_for('visitor_logs.visitor_signout') }}" class="button large expanded">Visitor Sign-out</a>
             </div>
         </div>
     </div>

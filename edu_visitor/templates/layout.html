@@ -23,12 +23,12 @@
               <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
                   <li class="menu-text">ISD 508 Visitors</li>
-                  <li><a href="{{ url_for('home') }}">Home</a></li>
-                  <li><a href="{{ url_for('about') }}">About</a></li>
+                  <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                  <li><a href="{{ url_for('main.about') }}">About</a></li>
                   <li>
                     <a href="#">Reports</a>
                     <ul class="menu vertical">
-                      <li><a href="{{ url_for('daily_summary') }}">Daily</a></li>
+                      <li><a href="{{ url_for('visitor_logs.daily_summary') }}">Daily</a></li>
                       <!-- <li><a href="#">Custom</a></li> -->
                     </ul>
                   </li>
@@ -38,24 +38,24 @@
               <div class="top-bar-right">
                 {% if current_user.is_authenticated and session['role'] == 'admin' %}
                     <ul class="menu">
-                        <li><a href="{{ url_for('account') }}">Account</a></li>
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
-                        <li><a class="button mr-5" href="{{ url_for('site_selection') }}">Change Site</a></li>
-                        <li><a class="button ml-5" href="{{ url_for('logout') }}">Logout</a></li>
+                        <li><a href="{{ url_for('users.account') }}">Account</a></li>
+                        <li><a href="{{ url_for('users.register') }}">Register</a></li>
+                        <li><a class="button mr-5" href="{{ url_for('main.site_selection') }}">Change Site</a></li>
+                        <li><a class="button ml-5" href="{{ url_for('users.logout') }}">Logout</a></li>
                     </ul>
                 {% elif current_user.is_authenticated and session['role'] == 'staff' %}
                     <ul class="menu">
-                        <li><a href="{{ url_for('account') }}">Account</a></li>
-                        <li><a class="button mr-5" href="{{ url_for('site_selection') }}">Change Site</a></li>
-                        <li><a class="button ml-5" href="{{ url_for('logout') }}">Logout</a></li>
+                        <li><a href="{{ url_for('main.account') }}">Account</a></li>
+                        <li><a class="button mr-5" href="{{ url_for('main.site_selection') }}">Change Site</a></li>
+                        <li><a class="button ml-5" href="{{ url_for('users.logout') }}">Logout</a></li>
                     </ul>
                 {% else %}
                     <ul class="menu">
                         <!-- Remove Register link once an admin user has been created -->
-                        <li><a href="{{ url_for('register') }}">Register</a></li>
+                        <li><a href="{{ url_for('users.register') }}">Register</a></li>
                         <!-- Remove the above link once an administrator account has been created -->
-                        <li><a href="{{ url_for('login') }}">Login</a></li>
-                        <li><a class="button" href="{{ url_for('site_selection') }}">Change Site</a></li>
+                        <li><a href="{{ url_for('users.login') }}">Login</a></li>
+                        <li><a class="button" href="{{ url_for('main.site_selection') }}">Change Site</a></li>
                     </ul>
                 {% endif %}
               </div>
@@ -80,7 +80,7 @@
                         <h2>{{ session['site'] }} Sign-in/Sign-out</h2>
                     </div>
                 {% else %}
-                    <span class="ml-5"><a class="button large" href="{{ url_for('site_selection') }}">Click Here To Select A Site</a></span>
+                    <span class="ml-5"><a class="button large" href="{{ url_for('main.site_selection') }}">Click Here To Select A Site</a></span>
                 {% endif %}
             </div>
             {% block content %}{% endblock %}
@@ -93,7 +93,7 @@
                 <div class="top-bar-right">
                     {% if current_user.is_authenticated %}
                         <ul class="menu">
-                            <li><a href="{{ url_for('help') }}">Help</a></li>
+                            <li><a href="{{ url_for('main.help') }}">Help</a></li>
                             <li><a href="#">Privacy Policy</a></li>
                             <li><a href="#">EULA</a></li>
                             <li><a href="#">Contact</a></li>

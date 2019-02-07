@@ -44,7 +44,7 @@
             </table>
             <div class="grid-x grid-margin-x align-center">
                 <div class="cell medium-3">
-                        <a class="button expanded" href="{{ url_for('update_student_signin', post_id=post.id) }}">Update</a>
+                        <a class="button expanded" href="{{ url_for('visitor_logs.update_student_signin', post_id=post.id) }}">Update</a>
                 </div>
                 <div class="cell medium-3">
                         <a class="button expanded alert" data-open="DeleteModal" href="#">Delete</a>
@@ -58,7 +58,7 @@
                         <button class="button expanded" data-close>Cancel</button>
                         </div>
                         <div class="cell small-3">
-                        <form action="{{ url_for('delete_student_signin', post_id=post.id) }}" method="POST">
+                        <form action="{{ url_for('visitor_logs.delete_student_signin', post_id=post.id) }}" method="POST">
                             <input class="button expanded alert" type="submit" value="Delete">
                         </form>
                         </div>

@@ -1,0 +1,40 @@
+from flask import Blueprint, render_template, url_for, session, flash, redirect
+from edu_visitor.main.forms import SiteSelectionForm
+from flask_login import current_user, login_required
+
+main = Blueprint('main', __name__)
+
+@main.route('/')
+@main.route('/home')
+def home():
+    # TODO: Finish the links and pages for the footer
+    # TODO: Fix the "URL_FOR" links for the JS on the bottom of layouts.html
+    # TODO: Fix the frame in the home page to act correctly when the window is sized down
+    return render_template('home.html')
+
+
+# Route to a page that tells about the creation of the system
+@main.route('/about')
+def about():
+    return render_template('about.html', title='About')
+
+
+# Route to a set the session cookie to display the correct site for the user
+@main.route('/site-selection', methods=['GET', 'POST'])
+def site_selection():
+    # Create a form to set the site value for the session
+    form = SiteSelectionForm()
+    if form.validate_on_submit():
+        # Update site value in session cookie
+        session['site'] = form.site.data
+        flash('Your location has been updated!', 'success')
+        return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('home'))
+    return render_template('site-selection.html', title='Site Selection', form=form)
+
+
+# Route with information about how to use the application
+@main.route('/help')
+@login_required
+def help():
+    # TODO: Add content to help explain how to use the site
+    return render_template('help.html', title='help')

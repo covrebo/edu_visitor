@@ -21,7 +21,7 @@
                         <td>{{ post.grade }}</td>
                         <td>{{ post.parent_name }}</td>
                         <td>{{ post.reason }}</td>
-                        <td><a href="{{ url_for('view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
+                        <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                     </tr>
                 {% endfor %}
               </tbody>
@@ -29,9 +29,9 @@
             <ul class="pagination" role="navigation" aria-label="Pagination">
                 {% for page_num in student_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == student_log_in.page %}
-                        <li><a class='current' href="{{ url_for('daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
+                        <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != student_log_in.page and page_num %}
-                        <li><a href="{{ url_for('daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
+                        <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% else %}
                         <li class="ellipsis"></li>
                     {% endif %}
@@ -58,7 +58,7 @@
                         <td>{{ post.grade }}</td>
                         <td>{{ post.parent_name }}</td>
                         <td>{{ post.reason }}</td>
-                        <td><a href="{{ url_for('view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
+                        <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                     </tr>
                 {% endfor %}
               </tbody>
@@ -66,9 +66,9 @@
             <ul class="pagination" role="navigation" aria-label="Pagination">
                 {% for page_num in student_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == student_log_out.page %}
-                        <li><a class='current' href="{{ url_for('daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
+                        <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != student_log_out.page and page_num %}
-                        <li><a href="{{ url_for('daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
+                        <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% else %}
                         <li class="ellipsis"></li>
                     {% endif %}
@@ -96,7 +96,7 @@
                             <td>{{ post.student_name }}</td>
                             <td>{{ post.grade }}</td>
                             <td>{{ post.reason }}</td>
-                            <td><a href="{{ url_for('view_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
+                            <td><a href="{{ url_for('visitor_logs.view_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -105,9 +105,9 @@
             <ul class="pagination" role="navigation" aria-label="Pagination">
                 {% for page_num in visitor_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == visitor_log_in.page %}
-                        <li><a class='current' href="{{ url_for('daily_summary', visitor_page_in=page_num) }}">{{ page_num }}</a></li>
+                        <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', visitor_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != visitor_log_in.page and page_num %}
-                        <li><a href="{{ url_for('daily_summary', visitor_page_in=page_num) }}">{{ page_num }}</a></li>
+                        <li><a href="{{ url_for('visitor_logs.daily_summary', visitor_page_in=page_num) }}">{{ page_num }}</a></li>
                     {% else %}
                         <li class="ellipsis"></li>
                     {% endif %}
@@ -129,7 +129,7 @@
                     {% if post.direction == "Out" and post.building == session['site'] %}
                         <tr>
                             <td>{{ post.visitor_name }}</td>
-                            <td><a href="{{ url_for('view_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
+                            <td><a href="{{ url_for('visitor_logs.view_visitor_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                         </tr>
                     {% endif %}
                 {% endfor %}
@@ -138,9 +138,9 @@
             <ul class="pagination" role="navigation" aria-label="Pagination">
                 {% for page_num in visitor_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                     {% if page_num == visitor_log_out.page %}
-                        <li><a class='current' href="{{ url_for('daily_summary', visitor_page_out=page_num) }}">{{ page_num }}</a></li>
+                        <li><a class='current' href="{{ url_for('visitor_logs.visitor_logs.daily_summary', visitor_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% elif page_num != visitor_log_out.page and page_num %}
-                        <li><a href="{{ url_for('daily_summary', visitor_page_out=page_num) }}">{{ page_num }}</a></li>
+                        <li><a href="{{ url_for('visitor_logs.daily_summary', visitor_page_out=page_num) }}">{{ page_num }}</a></li>
                     {% else %}
                         <li class="ellipsis"></li>
                     {% endif %}
