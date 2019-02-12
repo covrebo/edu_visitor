@@ -4,6 +4,7 @@ from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_moment import Moment
+from flask_migrate import Migrate
 from edu_visitor.config import Config
 
 
@@ -22,6 +23,9 @@ login_manager.login_message_category = 'warning'
 # Create an instance of moment for displaying correct dates and times
 moment = Moment()
 
+# Create an instance for the database migration
+migrate = Migrate()
+
 # Create an instance of mail to send emails
 mail = Mail()
 
@@ -35,6 +39,7 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     moment.init_app(app)
     mail.init_app(app)
+    migrate.init_app(app, db)
 
     from edu_visitor.users.routes import users
     from edu_visitor.visitor_logs.routes import visitor_logs

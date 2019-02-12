@@ -45,5 +45,5 @@ def site_selection():
         # Update site value in session cookie
         session['site'] = form.site.data
         flash('Your location has been updated!', 'success')
-        return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('home'))
+        return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('main.home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
