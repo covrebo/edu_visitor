@@ -106,7 +106,7 @@ def reset_request():
         send_reset_email(user)
         flash('An email has been sent with instructions to reset your password.', category='secondary')
         return redirect(url_for('users.login'))
-    return render_template('users.reset-request.html', title='Reset Password', form=form)
+    return render_template('reset-request.html', title='Reset Password', form=form)
 
 
 # A route for users to reset their passwords
