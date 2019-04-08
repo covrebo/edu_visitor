@@ -1,24 +1,26 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-container log-in-form">
-        <div>
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset>
-                    <h4 class="text-center">Select the Site to Monitor</h4>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-8">
-                                {{ form.site.label(class="") }}
-                                {{ form.site(class="") }}
+    <div class="row justify-content-center">
+        <div class="log-in-form col-md-8">
+            <div>
+                <form method="POST" action="">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <h4 class="display-4 text-center">Select the Site to Monitor</h4>
+                        <div class="m-4 form-group">
+                            <div class="form-group">
+                                    {{ form.site.label(class="") }}
+                                    {{ form.site(class="form-control") }}
+                            </div>
                         </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-4">
-                            {{ form.submit(class="button large expanded") }}
+                        <div class="row justify-content-center form-group">
+                            <div class="col-md-4">
+                                {{ form.submit(class="btn btn-primary btn-block") }}
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
-            </form>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}

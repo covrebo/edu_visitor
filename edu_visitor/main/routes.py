@@ -39,6 +39,7 @@ def help():
 # Route to a set the session cookie to display the correct site for the user
 @main.route('/site-selection', methods=['GET', 'POST'])
 def site_selection():
+    # TODO: Add a school logo/picture to the top of the page when the site is selected.
     # Create a form to set the site value for the session
     form = SiteSelectionForm()
     if form.validate_on_submit():
@@ -47,3 +48,23 @@ def site_selection():
         flash('Your location has been updated!', 'success')
         return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('main.home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
+
+# TODO: Refactor 403.html
+# TODO: Refactor 404.html
+# TODO: Refactor 500.html
+# TODO: Refactor about.html
+# TODO: Refactor account.html
+# TODO: Refactor daily-summary.html
+# TODO: Refactor help.html
+# TODO: Refactor privacy-policy.html
+# TODO: Refactor register.html
+# TODO: Refactor reset-request.html
+# TODO: Refactor reset-token.html
+# TODO: Refactor student-signin.html
+# TODO: Refactor student-signout.html
+# TODO: Refactor student-update.html
+# TODO: Refactor student-view.html
+# TODO: Refactor visitor-signin.html
+# TODO: Refactor visitor-signout.html
+# TODO: Refactor visitor-update.html
+# TODO: Refactor visitor-view.html
