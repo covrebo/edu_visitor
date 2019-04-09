@@ -30,7 +30,7 @@ class RegistrationForm(FlaskForm):
         ], validators=[
         DataRequired()
         ])
-    building = SelectField('Building', choices=[
+    building = SelectField('Default Building', choices=[
         ('High School', 'High School'),
         ('Middle School', 'Middle School'),
         ('North Elementary', 'North Elementary'),

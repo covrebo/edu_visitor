@@ -49,15 +49,10 @@ def site_selection():
         return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('main.home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
 
-# TODO: Refactor 403.html
-# TODO: Refactor 404.html
-# TODO: Refactor 500.html
-# TODO: Refactor about.html
 # TODO: Refactor account.html
 # TODO: Refactor daily-summary.html
 # TODO: Refactor help.html
 # TODO: Refactor privacy-policy.html
-# TODO: Refactor register.html
 # TODO: Refactor reset-request.html
 # TODO: Refactor reset-token.html
 # TODO: Refactor student-signin.html

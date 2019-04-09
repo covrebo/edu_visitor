@@ -1,142 +1,104 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-container log-in-form">
-        <div>
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset>
-                    <h2 class="text-center">Register Today</h2>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.user_first_name.label(class="") }}
-                            {% if form.user_first_name.errors %}
-                                {{ form.user_first_name(class='form-input-alert', placeholder='Must be between 2-30 characters') }}
-                                    <div class="callout small alert">
-                                        {% for error in form.user_first_name.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.user_first_name(class="", placeholder="Must be between 2-30 characters") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.user_last_name.label(class="") }}
-                            {% if form.user_last_name.errors %}
-                                {{ form.user_last_name(class='form-input-alert', placeholder='Must be between 2-20 characters') }}
-                                    <div class="callout small alert">
-                                        {% for error in form.user_last_name.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.user_last_name(class="", placeholder="Must be between 2-20 characters") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.username.label(class="") }}
-                            {% if form.username.errors %}
-                                {{ form.username(class='form-input-alert', placeholder='Must be between 2-20 characters') }}
-                                    <div class="callout small alert">
-                                        {% for error in form.username.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.username(class="", placeholder="Must be between 2-20 characters") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.email.label() }}
-                            {% if form.email.errors %}
-                                {{ form.email(class="form-input-alert", placeholder="Enter your email address to be used for logging in.") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.email.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.email(class="", placeholder="Enter your email address to be used for logging in.") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.role.label(class="") }}
-                            {% if form.role.errors %}
-                                {{ form.role(class="form-input-alert") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.role.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.role(class="", placeholder="Must be between 2-20 characters") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.building.label(class="") }}
-                            {% if form.building.errors %}
-                                {{ form.building(class="form-input-alert") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.building.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.building(class="") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.password.label() }}
-                            {% if form.password.errors %}
-                                {{ form.password(class="form-input-alert") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.password.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.password() }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.password_confirmation.label() }}
-                            {% if form.password_confirmation.errors %}
-                                {{ form.password_confirmation(class="form-input-alert") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.password_confirmation.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.password_confirmation() }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-4">
-                            {{ form.submit(class="button large expanded") }}
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
-        <div class="grid-x grid-margin-x align-center mt-5">
-            <small class="small cell large-8 text-center">
-                <span class="muted">Already have an account? </span><a href="{{ url_for('users.login') }}">Login</a>
+    <div class="container justify-content-center col-md-8">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <legend class="h1 border-bottom mb-4 text-center">Register Today</legend>
+                <div class="form-group">
+                    {{ form.user_first_name.label(class="form-control-label") }}
+                    {% if form.user_first_name.errors %}
+                        {{ form.user_first_name(class='form-control form-control-lg is-invalid', placeholder='Must be between 2-30 characters') }}
+                            <div class="invalid-feedback">
+                                {% for error in form.user_first_name.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.user_first_name(class="form-control form-control-lg", placeholder="Must be between 2-30 characters") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.user_last_name.label(class="form-control-label") }}
+                    {% if form.user_last_name.errors %}
+                        {{ form.user_last_name(class='form-control form-control-lg is-invalid', placeholder='Must be between 2-20 characters') }}
+                            <div class="invalid-feedback">
+                                {% for error in form.user_last_name.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.user_last_name(class="form-control form-control-lg", placeholder="Must be between 2-20 characters") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class='form-control form-control-lg is-invalid', placeholder='Must be between 2-20 characters') }}
+                            <div class="invalid-feedback">
+                                {% for error in form.username.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                    {{ form.username(class="form-control form-control-lg", placeholder="Must be between 2-20 characters") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid", placeholder="Enter your email address to be used for logging in.") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.email.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg", placeholder="Enter your email address to be used for logging in.") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.role.label(class="form-control-label") }}
+                    {{ form.role(class="form-control") }}       
+                </div>
+                <div class="form-group">
+                    {{ form.building.label(class="form-control-label") }}
+                    {{ form.building(class="form-control") }}
+                </div>
+                <div class="form-group">
+                        {{ form.password.label(class="form-control-label") }}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control-lg is-invalid") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.password.errors %}
+                                        <span>Error: {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                        {% else %}
+                            {{ form.password(class="form-control form-control-lg") }}
+                        {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.password_confirmation.label(class="form-control-label") }}
+                    {% if form.password_confirmation.errors %}
+                        {{ form.password_confirmation(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.password_confirmation.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.password_confirmation(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </fieldset>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already have an account? <a class="ml-2" href="{{ url_for('users.login') }}">Login</a>
             </small>
         </div>
     </div>
