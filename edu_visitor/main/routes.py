@@ -49,8 +49,8 @@ def site_selection():
         return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('main.home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
 
-# TODO: Refactor reset-request.html
-# TODO: Refactor reset-token.html
+
+
 # TODO: Refactor student-signin.html
 # TODO: Refactor student-signout.html
 # TODO: Refactor student-update.html

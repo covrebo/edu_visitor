@@ -70,7 +70,7 @@
         <main class="container" role="main">
             <div class="row justify-content-center">
                 <!-- This displays Flask flash messages at the top of the page -->
-                <div class="m-4 col-md-8">
+                <div class="m-3 col-md-8">
                     {% with messages = get_flashed_messages(with_categories=true) %}
                         {% if messages %}
                             {% for category, message in messages %}
@@ -83,9 +83,9 @@
                 </div>
             </div>
             <div class="row justify-content-center">
-                <div class="m-2 text-center">
+                <div class="m-1 text-center">
                     {% if session['site'] %}
-                        <h2 class="display-3">{{ session['site'] }} Sign-in/Sign-out</h2>
+                        <h2 class="display-4">{{ session['site'] }} Sign-in/Sign-out</h2>
                     {% else %}
                         <span class="pb-2"><a class="btn btn-primary btn-lg" href="{{ url_for('main.site_selection') }}">Click Here To Select A Site</a></span>
                     {% endif %}

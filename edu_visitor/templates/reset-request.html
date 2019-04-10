@@ -1,33 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-container log-in-form">
-        <div>
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset>
-                    <h2 class="text-center">Request a Passsword Reset</h2>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.email.label(class="") }}
-                            {% if form.email.errors %}
-                                {{ form.email(class='form-input-alert', placeholder="Email") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.email.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.email(class="", placeholder="Email") }}
-                            {% endif %}
-                        </div>
+    <div class="container col-md-8">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <h2 class="text-center">Request a Passsword Reset</h2>
+                    <div class="form-group">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class='form-control form-control-lg is-invalid', placeholder="Email") }}
+                                <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                        <span>Error: {{ error }}</span>
+                                    {% endfor %}
+                                </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg", placeholder="Email") }}
+                        {% endif %}
                     </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-4">
-                            {{ form.submit(class="button expanded") }}
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </fieldset>
+        </form>
     </div>
 {% endblock content %}
