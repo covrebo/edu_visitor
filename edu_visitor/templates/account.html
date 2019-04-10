@@ -1,84 +1,67 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="content-section col-10">
-        <div class="grid-x grid-margin-x align-center">
-            <div class="media">
-                <img class="rounded-circle account-img" src="{{ image_file }}">
-                <div class="media-body">
-                    <h2 class="account-heading">{{ current_user.user_first_name + " " + current_user.user_last_name }}</h2>
-                    <p>{{ current_user.email }}</p>
-                    <p>{{ session['role'].title() }} Account</p>
+    <div class="row justify-content-center">
+        <div class="content-section col-8">
+            <div class="grid-x grid-margin-x align-center">
+                <div class="media">
+                    <img class="rounded-circle account-img" src="{{ image_file }}">
+                    <div class="media-body">
+                        <h2 class="account-heading">{{ current_user.user_first_name + " " + current_user.user_last_name }}</h2>
+                        <p>{{ current_user.email }}</p>
+                        <p>{{ session['role'].title() }} Account</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div>
-            <form method="POST" action="" enctype="multipart/form-data">
-                {{ form.hidden_tag() }}
-                <fieldset>
-                    <h4 class="text-center subheader">Update Account</h4>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.username.label(class="") }}
+            <div>
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {{ form.hidden_tag() }}
+                    <fieldset class="form-group">
+                        <legend class="h3 border-bottom pb-2 mb-4 text-center">Update Account</legend>
+                        <div class="form-group">
+                            {{ form.username.label(class="form-control-label") }}
                             {% if form.username.errors %}
-                                {{ form.username(class='form-input-alert', placeholder='Must be between 2-20 characters') }}
-                                    <div class="callout small alert">
+                                {{ form.username(class='form-control form-control-lg is-invalid', placeholder='Must be between 2-20 characters') }}
+                                    <div class="invalid-feedback">
                                         {% for error in form.username.errors %}
-                                            <small>Error: {{ error }}</small>
+                                            <span>Error: {{ error }}</span>
                                         {% endfor %}
                                     </div>
                             {% else %}
-                                {{ form.username(class="", placeholder="Must be between 2-20 characters") }}
+                                {{ form.username(class="form-control form-control-lg", placeholder="Must be between 2-20 characters") }}
                             {% endif %}
                         </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.email.label() }}
+                        <div class="form-group">
+                            {{ form.email.label(class="form-control-label") }}
                             {% if form.email.errors %}
-                                {{ form.email(class="form-input-alert", placeholder="Enter your email address to be used for logging in.") }}
-                                    <div class="callout small alert">
+                                {{ form.email(class="form-control form-control-lg is-invalid", placeholder="Enter your email address to be used for logging in.") }}
+                                    <div class="invalid-feedback">
                                         {% for error in form.email.errors %}
-                                            <small>Error: {{ error }}</small>
+                                            <span>Error: {{ error }}</span>
                                         {% endfor %}
                                     </div>
                             {% else %}
-                                {{ form.email(class="", placeholder="Enter your email address to be used for logging in.") }}
+                                {{ form.email(class="form-control form-control-lg", placeholder="Enter your email address to be used for logging in.") }}
                             {% endif %}
                         </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.building.label(class="") }}
-                            {% if form.building.errors %}
-                                {{ form.building(class="form-input-alert") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.building.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.building(class="") }}
-                            {% endif %}
+                        <div class="form-group">
+                            {{ form.building.label(class="form-control-label") }}
+                            {{ form.building(class="form-control") }}
                         </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.picture.label(class="button") }}
-                            {{ form.picture(class="show-for-sr") }}
+                        <div class="form-group">
+                            {{ form.picture.label(class="") }}
+                            {{ form.picture(class="form-control-file") }}
                             {% if form.picture.errors %}
                                 {% for error in form.picture.errors %}
-                                    <small class="alert label">Error: {{ error }}</small></br>
+                                    <span class="text-danger">Error: {{ error }}</span>></br>
                                 {% endfor %}
                             {% endif %}
                         </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-2">
-                            {{ form.submit(class="button expanded") }}
+                        <div class="form-group">
+                            {{ form.submit(class="btn btn-outline-info") }}
                         </div>
-                    </div>
-                </fieldset>
-            </form>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     </div>
 {% endblock content %}
