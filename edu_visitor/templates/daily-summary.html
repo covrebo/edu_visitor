@@ -1,91 +1,87 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-x grid-margin-x align-center">
+    <div class="container justify-content-center">
         <!-- Student Sign-in Report -->
-        <div class="cell large-12 callout">
-            <h3 class="table-label text-center">Student Sign-in Log</h3>
-            <table>
-              <thead>
+        <h3 class="table-label text-center">Student Sign-in Log</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Student</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Parent</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in student_log_in.items %}
                 <tr>
-                  <th>Student</th>
-                  <th>Grade</th>
-                  <th>Parent</th>
-                  <th>Reason</th>
-                  <th>Time</th>
+                    <td>{{ post.student_name }}</td>
+                    <td>{{ post.grade }}</td>
+                    <td>{{ post.parent_name }}</td>
+                    <td>{{ post.reason }}</td>
+                    <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                 </tr>
-              </thead>
-              <tbody>
-                {% for post in student_log_in.items %}
-                    <tr>
-                        <td>{{ post.student_name }}</td>
-                        <td>{{ post.grade }}</td>
-                        <td>{{ post.parent_name }}</td>
-                        <td>{{ post.reason }}</td>
-                        <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
-                    </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in student_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num == student_log_in.page %}
-                        <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
-                    {% elif page_num != student_log_in.page and page_num %}
-                        <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
-                    {% else %}
-                        <li class="ellipsis"></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination" role="navigation" aria-label="Pagination">
+            {% for page_num in student_log_in.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num == student_log_in.page %}
+                    <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
+                {% elif page_num != student_log_in.page and page_num %}
+                    <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_in=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                    <li class="ellipsis"></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
         <!-- Student Sign-out Report -->
-        <div class="cell large-12 callout">
-            <h3 class="table-label text-center">Student Sign-out Log</h3>
-            <table>
-              <thead>
+        <h3 class="table-label text-center">Student Sign-out Log</h3>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Student</th>
+                <th scope="col">Grade</th>
+                <th scope="col">Parent</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Time</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for post in student_log_out.items %}
                 <tr>
-                  <th>Student</th>
-                  <th>Grade</th>
-                  <th>Parent</th>
-                  <th>Reason</th>
-                  <th>Time</th>
+                    <td>{{ post.student_name }}</td>
+                    <td>{{ post.grade }}</td>
+                    <td>{{ post.parent_name }}</td>
+                    <td>{{ post.reason }}</td>
+                    <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
                 </tr>
-              </thead>
-              <tbody>
-                {% for post in student_log_out.items %}
-                    <tr>
-                        <td>{{ post.student_name }}</td>
-                        <td>{{ post.grade }}</td>
-                        <td>{{ post.parent_name }}</td>
-                        <td>{{ post.reason }}</td>
-                        <td><a href="{{ url_for('visitor_logs.view_student_signin', post_id=post.id) }}">{{ moment(post.date_time).format('LLL') }}</a></td>
-                    </tr>
-                {% endfor %}
-              </tbody>
-            </table>
-            <ul class="pagination" role="navigation" aria-label="Pagination">
-                {% for page_num in student_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
-                    {% if page_num == student_log_out.page %}
-                        <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
-                    {% elif page_num != student_log_out.page and page_num %}
-                        <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
-                    {% else %}
-                        <li class="ellipsis"></li>
-                    {% endif %}
-                {% endfor %}
-            </ul>
-        </div>
+            {% endfor %}
+            </tbody>
+        </table>
+        <ul class="pagination" role="navigation" aria-label="Pagination">
+            {% for page_num in student_log_out.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                {% if page_num == student_log_out.page %}
+                    <li><a class='current' href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
+                {% elif page_num != student_log_out.page and page_num %}
+                    <li><a href="{{ url_for('visitor_logs.daily_summary', student_page_out=page_num) }}">{{ page_num }}</a></li>
+                {% else %}
+                    <li class="ellipsis"></li>
+                {% endif %}
+            {% endfor %}
+        </ul>
         <!-- Visitor Sign-in report -->
         <div class="cell large-12 callout">
             <h3 class="table-label text-center">Visitor Sign-in Log</h3>
-            <table>
+            <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Visitor</th>
-                  <th>Student</th>
-                  <th>Grade</th>
-                  <th>Reason</th>
-                  <th>Time</th>
+                  <th scope="col">Visitor</th>
+                  <th scope="col">Student</th>
+                  <th scope="col">Grade</th>
+                  <th scope="col">Reason</th>
+                  <th scope="col">Time</th>
                 </tr>
               </thead>
               <tbody>
@@ -117,11 +113,11 @@
         <!-- Visitor Sign-out Report -->
         <div class="cell large-12 callout">
             <h3 class="table-label text-center">Visitor Sign-out Log</h3>
-            <table>
+            <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Visitor</th>
-                  <th>Time</th>
+                  <th scope="col">Visitor</th>
+                  <th scope="col">Time</th>
                 </tr>
               </thead>
               <tbody>

@@ -50,7 +50,6 @@ def site_selection():
     return render_template('site-selection.html', title='Site Selection', form=form)
 
 # TODO: Refactor account.html
-# TODO: Refactor daily-summary.html
 # TODO: Refactor help.html
 # TODO: Refactor privacy-policy.html
 # TODO: Refactor reset-request.html
