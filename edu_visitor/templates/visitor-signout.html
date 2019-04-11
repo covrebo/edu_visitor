@@ -1,32 +1,27 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-container log-in-form">
-        <div>
-            <form method="POST" action="">
-                {{ form.hidden_tag() }}
-                <fieldset>
-                    <h2 class="text-center">Visitor Sign-out</h2>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-6">
-                            {{ form.visitor_name.label(class="form-input-alert") }}
-                            {% if form.visitor_name.errors %}
-                                {{ form.visitor_name(class='form-input-alert', placeholder="Visitor name") }}
-                                    <div class="callout small alert">
-                                        {% for error in form.visitor_name.errors %}
-                                            <small>Error: {{ error }}</small>
-                                        {% endfor %}
-                                    </div>
-                            {% else %}
-                                {{ form.visitor_name(class="", placeholder="Visitor name") }}
-                            {% endif %}
-                        </div>
-                    </div>
-                    <div class="grid-x grid-margin-x align-center">
-                        <div class="cell large-4">
-                            {{ form.submit(class="button large expanded") }}
-                        </div>
-                    </div>
-                </fieldset>
-            </form>
-        </div>
+    <div class="container col-md-8">
+        <form method="POST" action="">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+                <h2 class="text-center">Visitor Sign-out</h2>
+                <div class="form-group">
+                    {{ form.visitor_name.label(class="form-control-label") }}
+                    {% if form.visitor_name.errors %}
+                        {{ form.visitor_name(class='form-control form-control-lg is-invalid', placeholder="Visitor name") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.visitor_name.errors %}
+                                    <span>Error: {{ error }}</span>
+                                {% endfor %}
+                            </div>
+                    {% else %}
+                        {{ form.visitor_name(class="form-control form-control-lg", placeholder="Visitor name") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class="btn btn-outline-info") }}
+                </div>
+            </fieldset>
+        </form>
+    </div>
 {% endblock content %}

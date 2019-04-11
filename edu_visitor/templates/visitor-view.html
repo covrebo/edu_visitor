@@ -1,71 +1,70 @@
 {% extends "layout.html" %}
 {% block content %}
-    <div class="grid-x grid-margin-x align-center">
-        <!-- Student Sign-in Report -->
-        <div class="cell large-6 callout">
-            <h3 class="table-label text-center">Visitor Sign-in/Sign-out Summary</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Data Field</th>
-                        <th>Data</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Visitor Name:</td>
-                        <td>{{ post.visitor_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Student Name:</td>
-                        <td>{{ post.student_name }}</td>
-                    </tr>
-                    <tr>
-                        <td>Grade:</td>
-                        <td>{{ post.grade }}</td>
-                    </tr>
-                    <tr>
-                        <td>Reason:</td>
-                        <td>{{ post.reason }}</td>
-                    </tr>
-                    <tr>
-                        <td>Reason (other):</td>
-                        <td>{{ post.reason_other }}</td>
-                    </tr>
-                    <tr>
-                        <td>Direction:</td>
-                        <td>{{ post.direction }}</td>
-                    </tr>
-                    <tr>
-                        <td>Time:</td>
-                        <td>{{ moment(post.date_time).format('LLL') }}</td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="grid-x grid-margin-x align-center">
-                <div class="cell medium-3">
-                        <a class="button expanded" href="{{ url_for('visitor_logs.update_visitor_signin', post_id=post.id) }}">Update</a>
-                </div>
-                <div class="cell medium-3">
-                        <a class="button expanded alert" data-open="DeleteModal" href="#">Delete</a>
-                </div>
-                <div class="reveal" id="DeleteModal" data-reveal>
-                    <h1 class="">Delete entry?</h1>
-                    <p class="lead">Choosing delete will permanently remove this entry from the database.</p>
-                    <p class="alert label">This action cannot be undone.</p>
-                    <div class="grid-x grid-margin-x align-left">
-                        <div class="cell small-3">
-                        <button class="button expanded" data-close>Cancel</button>
+    <div class="container justify-content-center col-md-8">
+        <!-- Visitor Sign-in Report -->
+        <h3 class="table-label text-center">Visitor Sign-in/Sign-out Summary</h3>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Data Field</th>
+                    <th scope="col">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Visitor Name:</td>
+                    <td>{{ post.visitor_name }}</td>
+                </tr>
+                <tr>
+                    <td>Student Name:</td>
+                    <td>{{ post.student_name }}</td>
+                </tr>
+                <tr>
+                    <td>Grade:</td>
+                    <td>{{ post.grade }}</td>
+                </tr>
+                <tr>
+                    <td>Reason:</td>
+                    <td>{{ post.reason }}</td>
+                </tr>
+                <tr>
+                    <td>Reason (other):</td>
+                    <td>{{ post.reason_other }}</td>
+                </tr>
+                <tr>
+                    <td>Direction:</td>
+                    <td>{{ post.direction }}</td>
+                </tr>
+                <tr>
+                    <td>Time:</td>
+                    <td>{{ moment(post.date_time).format('LLL') }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="">
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('visitor_logs.update_visitor_signin', post_id=post.id) }}">Update</a>
+            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>
+            <!-- Modal -->
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title" id="deleteModalLabel">Delete entry?</h3>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
-                        <div class="cell small-3">
-                        <form action="{{ url_for('visitor_logs.delete_visitor_signin', post_id=post.id) }}" method="POST">
-                            <input class="button expanded alert" type="submit" value="Delete">
-                        </form>
+                        <div class="modal-body">
+                            <p class="lead">Choosing delete will permanently remove this entry from the database.</p>
+                            <p class="alert alert-danger">This action cannot be undone.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <form action="{{ url_for('visitor_logs.delete_visitor_signin', post_id=post.id) }}" method="POST">
+                                <input class="btn btn-danger" type="submit" value="Delete">
+                            </form>
                         </div>
                     </div>
-                    <button class="close-button" data-close aria-label="Close modal" type="button">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
                 </div>
             </div>
         </div>

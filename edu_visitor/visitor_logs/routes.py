@@ -138,7 +138,7 @@ def delete_student_signin(post_id):
 @login_required
 def view_visitor_signin(post_id):
     post = VisitorLog.query.get_or_404(post_id)
-    return render_template('visitor_logs.visitor-view.html', title="Update Entry", post=post)
+    return render_template('visitor-view.html', title="Update Entry", post=post)
 
 
 # A route to update a specific post for visitors
