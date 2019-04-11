@@ -48,14 +48,3 @@ def site_selection():
         flash('Your location has been updated!', 'success')
         return redirect(url_for('visitor_logs.daily_summary')) if current_user.is_authenticated else redirect(url_for('main.home'))
     return render_template('site-selection.html', title='Site Selection', form=form)
-
-
-
-# TODO: Refactor student-signin.html
-# TODO: Refactor student-signout.html
-# TODO: Refactor student-update.html
-# TODO: Refactor student-view.html
-# TODO: Refactor visitor-signin.html
-# TODO: Refactor visitor-signout.html
-# TODO: Refactor visitor-update.html
-# TODO: Refactor visitor-view.html
